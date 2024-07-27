@@ -1,14 +1,15 @@
-import { GlobeAltIcon } from "@heroicons/react/24/outline";
-import { lusitana } from "@/app/ui/fonts";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import React from "react";
+import { playfair_display } from "./fonts";
 
 export default function SenkrechtstarterLogo() {
-  return (
-    <div
-      className={`${lusitana.className} flex flex-row items-center leading-none text-white`}
-    >
-      <GlobeAltIcon className="h-12 w-12 rotate-[15deg]" />
-      <p className="text-[28px]">Senkrechtstarter Aachen</p>
-    </div>
-  );
+    return (
+        <div
+            className={`flex w-full flex-row justify-between items-center leading-none text-white sm:mr-2`}>
+            <p className={`${playfair_display.className} text-[28px]`}>
+                Senkrechtstarter Aachen
+            </p>
+            <PaperAirplaneIcon className="h-8 w-8 rotate-[-90deg]" />
+        </div>
+    );
 }

@@ -1,14 +1,11 @@
 export default async function Page() {
-  return (
-    <div className="w-full">
-      <div className="flex w-full items-center justify-between"></div>
+    return (
+        <div className="w-full">
+            <h2 className={`mb-4 mt-1 text-3xl `}>Materials</h2>
 
-      {/*  <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-            <Table query={query} currentPage={currentPage} />
-        </Suspense> */}
-      <div className="mt-5 flex w-full justify-center">
-        {/* <Pagination totalPages={totalPages} /> */}
-      </div>
-    </div>
-  );
+            <div className="mt-5 flex w-full justify-center">
+                Nothing here yet
+            </div>
+        </div>
+    );
 }

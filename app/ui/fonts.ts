@@ -1,6 +1,4 @@
-import { Inter } from 'next/font/google';
-import { Lusitana } from 'next/font/google';
+import { Source_Sans_3, Playfair_Display } from "next/font/google";
 
- 
-export const inter = Inter({ subsets: ['latin'] });
-export const lusitana = Lusitana({ weight: "400", subsets: ['latin'] });
+export const source_sans = Source_Sans_3({ subsets: ["latin"] });
+export const playfair_display = Playfair_Display({ subsets: ["latin"] });

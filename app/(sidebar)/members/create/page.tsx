@@ -1,24 +1,22 @@
-import SchoolForm from "@/app/ui/schools/school-form";
 import Breadcrumbs from "@/app/ui/breadcrumbs";
 import { fetchUsers } from "@/app/lib/data";
 import { CustomerField } from "@/app/lib/types";
+import CreateMemberForm from "@/app/ui/members/create-member-form";
 
 export default async function Page() {
-    const users = await fetchUsers();
-
     return (
         <div>
             <Breadcrumbs
                 breadcrumbs={[
-                    { label: "All Schools", href: "/schools" },
+                    { label: "All Members", href: "/members" },
                     {
-                        label: "Add a School",
-                        href: "/schools/create",
+                        label: "Add a Member",
+                        href: "/members/create",
                         active: true,
                     },
                 ]}
             />
-            <SchoolForm users={users} />
+            <CreateMemberForm />
         </div>
     );
 }

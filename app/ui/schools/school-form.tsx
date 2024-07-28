@@ -26,119 +26,54 @@ export default function SchoolForm({
             action={!!school ? editSchool.bind(null, school.id) : createSchool}>
             <div className="rounded-xl border-2 bg-gray-50 p-4 md:p-6">
                 {/* School Name */}
-                <div className="mb-4">
-                    <label
-                        htmlFor="name"
-                        className="mb-2 block text-sm font-medium">
-                        School Name
-                    </label>
-                    <div className="relative mt-2 rounded-md">
-                        <div className="relative">
-                            <input
-                                id="name"
-                                name="name"
-                                type="string"
-                                step="0.01"
-                                defaultValue={school?.name}
-                                placeholder="Enter school name"
-                                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10  text-sm outline-2 placeholder:text-gray-500"
-                            />
-                            <IdentificationIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-                        </div>
-                    </div>
-                </div>
+                <FormInput
+                    school={school}
+                    label="School Name"
+                    name="name"
+                    placeholder="Enter school name"
+                    icon={IdentificationIcon}
+                    type="string"
+                />
 
                 {/* Address */}
-                <div className="mb-4">
-                    <label
-                        htmlFor="address"
-                        className="mb-2 block text-sm font-medium">
-                        Address
-                    </label>
-                    <div className="relative mt-2 rounded-md">
-                        <div className="relative">
-                            <input
-                                id="address"
-                                name="address"
-                                type="string"
-                                step="0.01"
-                                defaultValue={school?.address}
-                                placeholder="Enter address"
-                                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10  text-sm outline-2 placeholder:text-gray-500"
-                            />
-                            <HomeIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-                        </div>
-                    </div>
-                </div>
+                <FormInput
+                    school={school}
+                    label="Address"
+                    name="address"
+                    placeholder="Enter address"
+                    icon={HomeIcon}
+                    type="string"
+                />
 
                 {/* Contact Person */}
-                <div className="mb-4">
-                    <label
-                        htmlFor="contact_person"
-                        className="mb-2 block text-sm font-medium">
-                        Contact Person
-                    </label>
-                    <div className="relative mt-2 rounded-md">
-                        <div className="relative">
-                            <input
-                                id="contact_person"
-                                name="contact_person"
-                                type="string"
-                                step="0.01"
-                                defaultValue={school?.contact_person}
-                                placeholder="Enter contact person"
-                                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10  text-sm outline-2 placeholder:text-gray-500"
-                            />
-                            <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-                        </div>
-                    </div>
-                </div>
+                <FormInput
+                    school={school}
+                    label="Contact Person"
+                    name="contact_person"
+                    placeholder="Enter contact person"
+                    icon={UserCircleIcon}
+                    type="string"
+                />
 
                 {/* Email */}
-                <div className="mb-4">
-                    <label
-                        htmlFor="email"
-                        className="mb-2 block text-sm font-medium">
-                        Email
-                    </label>
-                    <div className="relative mt-2 rounded-md">
-                        <div className="relative">
-                            <input
-                                id="email"
-                                name="email"
-                                type="string"
-                                step="0.01"
-                                defaultValue={school?.email}
-                                placeholder="Enter email"
-                                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10  text-sm outline-2 placeholder:text-gray-500"
-                            />
-                            <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-                        </div>
-                    </div>
-                </div>
+                <FormInput
+                    school={school}
+                    label="Email"
+                    name="email"
+                    placeholder="Enter email"
+                    icon={AtSymbolIcon}
+                    type="email"
+                />
 
                 {/* Phone Number */}
-                <div className="mb-4">
-                    <label
-                        htmlFor="phone_number"
-                        className="mb-2 block text-sm font-medium">
-                        Phone Number
-                    </label>
-                    <div className="relative mt-2 rounded-md">
-                        <div className="relative">
-                            <input
-                                id="phone_number"
-                                name="phone_number"
-                                type="string"
-                                step="0.01"
-                                defaultValue={school?.phone_number}
-                                placeholder="Enter phone number"
-                                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                            />
-                            <PhoneIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-                        </div>
-                    </div>
-                </div>
+                <FormInput
+                    school={school}
+                    label="Phone Number"
+                    name="phone_number"
+                    placeholder="Enter phone number"
+                    icon={PhoneIcon}
+                    type="tel"
+                />
 
                 {/* Invoice Status */}
                 <fieldset className="mb-4">
@@ -211,5 +146,43 @@ export default function SchoolForm({
                 </Button>
             </div>
         </form>
+    );
+}
+
+function FormInput({
+    school,
+    label,
+    name,
+    placeholder,
+    icon: IconComponent,
+    type,
+}: {
+    school: any;
+    label: string;
+    name: string;
+    placeholder: string;
+    icon: any;
+    type: string;
+}) {
+    return (
+        <div className="mb-4">
+            <label htmlFor={name} className="mb-2 block text-sm font-medium">
+                {label}
+            </label>
+            <div className="relative mt-2 rounded-md">
+                <div className="relative">
+                    <input
+                        id={name}
+                        name={name}
+                        type={type}
+                        step="0.01"
+                        defaultValue={school?.[name]}
+                        placeholder={placeholder}
+                        className="peer block w-full rounded-md border border-gray-200 py-2 pl-10  text-sm outline-2 placeholder:text-gray-500"
+                    />
+                    <IconComponent className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+                </div>
+            </div>
+        </div>
     );
 }

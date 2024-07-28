@@ -1,7 +1,5 @@
 import Breadcrumbs from "@/app/ui/breadcrumbs";
-import { fetchUsers } from "@/app/lib/data";
-import { CustomerField } from "@/app/lib/types";
-import CreateMemberForm from "@/app/ui/members/create-member-form";
+import MemberForm from "@/app/ui/members/member-form";
 
 export default async function Page() {
     return (
@@ -16,7 +14,7 @@ export default async function Page() {
                     },
                 ]}
             />
-            <CreateMemberForm />
+            <MemberForm />
         </div>
     );
 }

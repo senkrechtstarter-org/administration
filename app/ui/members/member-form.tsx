@@ -6,8 +6,10 @@ import {
 } from "@heroicons/react/24/outline";
 import { Button } from "@/app/ui/button";
 import { createMember } from "@/app/lib/actions";
+import { User } from "@/app/lib/types";
+import { userAgent } from "next/server";
 
-export default function CreateMemberForm() {
+export default function MemberForm({ member }: { member?: User }) {
     return (
         <form action={createMember}>
             <div className="rounded-xl border-2 bg-gray-50 p-4 md:p-6">
@@ -27,6 +29,7 @@ export default function CreateMemberForm() {
                                 type="string"
                                 step="0.01"
                                 placeholder="Enter first name"
+                                defaultValue={member?.first_name}
                                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10  text-sm outline-2 placeholder:text-gray-500"
                             />
                             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
@@ -50,6 +53,7 @@ export default function CreateMemberForm() {
                                 type="string"
                                 step="0.01"
                                 placeholder="Enter last name"
+                                defaultValue={member?.last_name}
                                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10  text-sm outline-2 placeholder:text-gray-500"
                             />
                             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
@@ -73,6 +77,7 @@ export default function CreateMemberForm() {
                                 type="string"
                                 step="0.01"
                                 placeholder="Enter email"
+                                defaultValue={member?.email}
                                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10  text-sm outline-2 placeholder:text-gray-500"
                             />
                             <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
@@ -98,6 +103,7 @@ export default function CreateMemberForm() {
                                 required
                                 step="0.01"
                                 placeholder="Enter password"
+                                defaultValue={member?.password}
                                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10  text-sm outline-2 placeholder:text-gray-500"
                             />
                             <LockClosedIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
@@ -111,7 +117,9 @@ export default function CreateMemberForm() {
                     className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200">
                     Cancel
                 </Link>
-                <Button type="submit">Create Member</Button>
+                <Button type="submit">
+                    {!!member ? "Edit Member" : "Create Member"}
+                </Button>
             </div>
         </form>
     );

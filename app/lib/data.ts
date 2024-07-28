@@ -41,6 +41,16 @@ export async function fetchSchool(id: string) {
     }
 }
 
+export async function fetchMember(id: string) {
+    try {
+        const data = await sql<User>`SELECT * FROM users WHERE id = ${id}`;
+        return data.rows[0];
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch users.");
+    }
+}
+
 export async function fetchRevenue() {
     try {
         // Artificially delay a response for demo purposes.

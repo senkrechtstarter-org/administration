@@ -8,6 +8,9 @@ export const metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
+            <head>
+                <title>Senkrechtstarter Aachen</title>
+            </head>
             <body
                 className={`${source_sans.className} antialiased max-w-screen-2xl mx-auto`}>
                 {children}

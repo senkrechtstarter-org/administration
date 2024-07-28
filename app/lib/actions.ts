@@ -94,12 +94,10 @@ export async function deleteMember(id: string) {
     revalidatePath("/members");
 }
 
-export async function authenticate(
-    prevState: string | undefined,
-    formData: FormData,
-) {
+export async function authenticate(prevState: string | undefined) {
+    "use server";
     try {
-        await signIn("credentials", formData);
+        await signIn("google", { redirectTo: "/home" });
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {

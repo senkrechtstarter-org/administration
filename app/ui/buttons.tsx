@@ -1,4 +1,4 @@
-import { deleteSchool, deleteMember } from "@/app/lib/actions";
+import { deleteSchool, deleteUser } from "@/app/lib/actions";
 import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
@@ -34,10 +34,10 @@ export function DeleteSchoolButton({ id }: { id: string }) {
     );
 }
 
-export function DeleteMemberButton({ id }: { id: string }) {
-    const deleteMemberWithId = deleteMember.bind(null, id);
+export function DeleteUserButton({ id }: { id: string }) {
+    const deleteUserWithId = deleteUser.bind(null, id);
     return (
-        <form action={deleteMemberWithId}>
+        <form action={deleteUserWithId}>
             <button className="rounded-md border p-2 hover:bg-gray-100">
                 <span className="sr-only">Delete</span>
                 <TrashIcon className="w-5" />

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { fetchUsers } from "../../lib/data";
 import { Button } from "../../ui/button";
-import { DeleteMemberButton, UpdateMemberbutton } from "@/app/ui/buttons";
+import { DeleteUserButton, UpdateMemberbutton } from "@/app/ui/buttons";
 
 export default async function Page() {
     const users = await fetchUsers();
@@ -21,12 +21,12 @@ export default async function Page() {
                         key={user.id}
                         className="flex flex-row items-center justify-between p-4 border-b-2">
                         <div className="rounded p-4">
-                            <h1>{user.first_name + " " + user.last_name}</h1>
+                            <h1>{user.name}</h1>
                             <p>{user.email}</p>
                         </div>
                         <div className="flex items-center gap-3">
                             <UpdateMemberbutton id={user.id} />
-                            <DeleteMemberButton id={user.id} />
+                            <DeleteUserButton id={user.id} />
                         </div>
                     </div>
                 ))}

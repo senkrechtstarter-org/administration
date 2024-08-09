@@ -1,18 +1,22 @@
 "use client";
 
-import SenkrechtstarterLogo from "@/app/ui/senkrechtstarter-logo";
-import LoginForm from "@/app/ui/login-form";
+import SenkrechtstarterLogo from "@/app/components/senkrechtstarter-logo";
+import LoginForm from "@/app/components/login-form";
+import { Card, CardHeader, CardFooter, Divider } from "@nextui-org/react";
 export default function LoginPage() {
     return (
-        <div className="flex items-center justify-center md:h-screen">
-            <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
-                <div className="flex h-20 w-full items-end rounded-lg bg-blue-500 p-3 md:h-36">
-                    <div className="w-32 text-white md:w-36">
+        <main>
+            <div className="flex items-center max-w-140 m-auto mt-auto justify-center h-[100vh]">
+                <Card className="bg-gradient-to-l from-cyan-400 to-blue-500">
+                    <CardHeader className="h-20 items-end rounded-lg p-5">
                         <SenkrechtstarterLogo />
-                    </div>
-                </div>
-                <LoginForm />
+                    </CardHeader>
+                    {/* <Divider /> */}
+                    <CardFooter className="justify-end items-center">
+                        <LoginForm />
+                    </CardFooter>
+                </Card>
             </div>
-        </div>
+        </main>
     );
 }

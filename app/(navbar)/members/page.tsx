@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { fetchUsers } from "../../lib/data";
-import { Button } from "../../ui/button";
-import { DeleteUserButton, UpdateMemberbutton } from "@/app/ui/buttons";
+import { fetchUsers } from "../lib/data";
+import { Button } from "../components/button";
+import { DeleteUserButton, UpdateMemberbutton } from "@/app/components/buttons";
 
 export default async function Page() {
     const users = await fetchUsers();

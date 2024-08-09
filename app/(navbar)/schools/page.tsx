@@ -2,9 +2,12 @@
 import React from "react";
 import { fetchSchools } from "../../lib/data";
 import Link from "next/link";
-import { Button } from "@/app/ui/button";
+import { Button } from "@/app/components/button";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { DeleteSchoolButton, UpdateSchoolButton } from "@/app/ui/buttons";
+import {
+    DeleteSchoolButton,
+    UpdateSchoolButton,
+} from "@/app/components/buttons";
 
 export default async function Page() {
     const schools = await fetchSchools();

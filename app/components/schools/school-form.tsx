@@ -1,4 +1,3 @@
-import { User } from "@/app/lib/types";
 import Link from "next/link";
 import {
     IdentificationIcon,
@@ -10,72 +9,70 @@ import {
     AtSymbolIcon,
     PhoneIcon,
 } from "@heroicons/react/24/outline";
-import { Button } from "@/app/ui/button";
+import { Button } from "@nextui-org/react";
 import { createSchool, editSchool } from "@/app/lib/actions";
-import { School } from "@/app/lib/types";
+import { Input } from "@nextui-org/react";
 
 export default function SchoolForm({
     users,
     school,
 }: {
-    users: User[];
-    school?: School;
+    users?: any;
+    school?: any;
 }) {
     return (
         <form
             action={!!school ? editSchool.bind(null, school.id) : createSchool}>
-            <div className="rounded-xl border-2 bg-gray-50 p-4 md:p-6">
+            <div className="flex flex-col gap-3 rounded-xl border-2 p-4 md:p-6 ">
                 {/* School Name */}
-                <FormInput
-                    school={school}
+                <Input
                     label="School Name"
+                    labelPlacement="inside"
                     name="name"
                     placeholder="Enter school name"
-                    icon={IdentificationIcon}
+                    // startContent={<IdentificationIcon />}
                     type="string"
                 />
 
                 {/* Address */}
-                <FormInput
-                    school={school}
+                <Input
                     label="Address"
+                    labelPlacement="inside"
                     name="address"
                     placeholder="Enter address"
-                    icon={HomeIcon}
+                    // startContent={<HomeIcon />}
                     type="string"
                 />
 
                 {/* Contact Person */}
-                <FormInput
-                    school={school}
+                <Input
                     label="Contact Person"
+                    labelPlacement="inside"
                     name="contact_person"
                     placeholder="Enter contact person"
-                    icon={UserCircleIcon}
+                    // startContent={<UserCircleIcon />}
                     type="string"
                 />
 
                 {/* Email */}
-                <FormInput
-                    school={school}
+                <Input
                     label="Email"
                     name="email"
                     placeholder="Enter email"
-                    icon={AtSymbolIcon}
+                    // startContent={<AtSymbolIcon />}
                     type="email"
                 />
 
                 {/* Phone Number */}
-                <FormInput
-                    school={school}
+                <Input
                     label="Phone Number"
                     name="phone_number"
                     placeholder="Enter phone number"
-                    icon={PhoneIcon}
+                    // startContent={<PhoneIcon />}
                     type="tel"
                 />
 
-                {/* Invoice Status */}
+                {/* School Relation */}
                 <fieldset className="mb-4">
                     <legend className="mb-2 block text-sm font-medium">
                         Set the school relation

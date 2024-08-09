@@ -4,7 +4,7 @@ import {
     AtSymbolIcon,
     LockClosedIcon,
 } from "@heroicons/react/24/outline";
-import { Button } from "@/app/ui/button";
+import { Button } from "@/app/components/button";
 import { createUser, editUser } from "@/app/lib/actions";
 
 export default function MemberForm({ member }: { member?: any }) {

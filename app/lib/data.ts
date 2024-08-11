@@ -59,3 +59,14 @@ export async function fetchUserByEmail(email: string) {
         throw new Error("Failed to fetch user.");
     }
 }
+
+export async function fetchReports(schoolId: string) {
+    try {
+        return await prisma.report.findMany({
+            where: { schoolId },
+        });
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch user.");
+    }
+}

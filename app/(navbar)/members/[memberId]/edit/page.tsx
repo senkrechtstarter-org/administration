@@ -11,7 +11,7 @@ export default async function Page({
     const user = await fetchUser(userId);
     return (
         <div>
-            <Breadcrumbs underline="none" radius="full" variant="solid">
+            <Breadcrumbs underline="none" variant="solid">
                 <BreadcrumbItem href="/members">All Members</BreadcrumbItem>
                 <BreadcrumbItem href={`/members/${userId}/edit`}>
                     {user?.name}

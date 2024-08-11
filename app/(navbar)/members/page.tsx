@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { fetchUsers } from "../lib/data";
-import { Button } from "../components/button";
-import { DeleteUserButton, UpdateMemberbutton } from "@/app/components/buttons";
+import { fetchUsers } from "../../lib/data";
+import { Button } from "@nextui-org/react";
+import UserCard from "@/app/components/members/UserCard";
 
 export default async function Page() {
     const users = await fetchUsers();
@@ -11,24 +11,13 @@ export default async function Page() {
             <div className="flex justify-between">
                 <h2 className={`mb-4 mt-1 text-3xl `}>All Members</h2>
                 <Link href="/members/create">
-                    <Button>Add a New Member</Button>
+                    <Button color="primary">Add a New Member</Button>
                 </Link>
             </div>
 
-            <div className="rounded-xl bg-gray-50 border-2">
+            <div className="flex flex-wrap gap-4">
                 {users.map((user) => (
-                    <div
-                        key={user.id}
-                        className="flex flex-row items-center justify-between p-4 border-b-2">
-                        <div className="rounded p-4">
-                            <h1>{user.name}</h1>
-                            <p>{user.email}</p>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <UpdateMemberbutton id={user.id} />
-                            <DeleteUserButton id={user.id} />
-                        </div>
-                    </div>
+                    <UserCard key={user.id} user={user} />
                 ))}
             </div>
         </>

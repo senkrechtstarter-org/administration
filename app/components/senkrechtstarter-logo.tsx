@@ -6,8 +6,9 @@ import Link from "next/link";
 export default function SenkrechtstarterLogo() {
     return (
         <Link href="/home">
-            <div className="flex w-full flex-row justify-between items-center leading-none text-white sm:mr-2 gap-1">
-                <p className={`${playfair_display.className} text-[28px]`}>
+            <div className="flex w-full flex-row justify-between items-center leading-none text-black dark:text-white sm:mr-2 gap-1">
+                <p
+                    className={`${playfair_display.className} text-[28px] dark:color-black`}>
                     Senkrechtstarter Aachen
                 </p>
             </div>

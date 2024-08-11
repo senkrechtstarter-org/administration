@@ -5,7 +5,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { signIn, signOut } from "next-auth/react";
-import { AuthError } from "next-auth";
+// import { AuthError } from "next-auth";
 
 const SchoolSchema = z.object({
     id: z.string(),
@@ -21,6 +21,7 @@ const SchoolSchema = z.object({
 const CreateSchool = SchoolSchema.omit({ id: true, last_visit: true });
 
 export async function createSchool(formData: FormData) {
+    console.log("Formdata: ", formData);
     const schoolData = CreateSchool.parse({
         name: formData.get("name"),
         address: formData.get("address"),
@@ -106,6 +107,39 @@ export async function deleteUser(id: string) {
         where: { id },
     });
     revalidatePath("/members");
+}
+
+export async function createReport(formData: FormData) {
+    const reportData = {
+        school_id: formData.get("school_id"),
+        user_id: formData.get("user_id"),
+        date: formData.get("date"),
+        content: formData.get("content"),
+    };
+
+    await prisma.report.create({
+        data: reportData,
+    });
+
+    revalidatePath("/reports");
+    redirect("/reports");
+}
+
+export async function editReport(id: string, formData: FormData) {
+    const reportData = {
+        school_id: formData.get("school_id"),
+        user_id: formData.get("user_id"),
+        date: formData.get("date"),
+        content: formData.get("content"),
+    };
+
+    await prisma.report.update({
+        where: { id },
+        data: reportData,
+    });
+
+    revalidatePath("/reports");
+    redirect("/reports");
 }
 
 export async function authenticate(prevState: string | undefined) {

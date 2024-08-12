@@ -32,7 +32,7 @@ export async function createSchool(formData: FormData) {
     });
 
     await prisma.school.create({
-        data: schoolData,
+        data: schoolData as any,
     });
 
     revalidatePath("/schools");
@@ -51,7 +51,7 @@ export async function editSchool(id: string, formData: FormData) {
 
     await prisma.school.update({
         where: { id },
-        data: schoolData,
+        data: schoolData as any,
     });
 
     revalidatePath("/schools");
@@ -118,7 +118,7 @@ export async function createReport(formData: FormData) {
     };
 
     await prisma.report.create({
-        data: reportData,
+        data: reportData as any,
     });
 
     revalidatePath("/reports");
@@ -135,7 +135,7 @@ export async function editReport(id: string, formData: FormData) {
 
     await prisma.report.update({
         where: { id },
-        data: reportData,
+        data: reportData as any,
     });
 
     revalidatePath("/reports");

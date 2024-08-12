@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/app/lib/client";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
     pages: {
         signIn: "/login",
     },

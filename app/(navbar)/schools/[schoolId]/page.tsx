@@ -6,7 +6,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import SchoolCard from "@/app/components/schools/SchoolCard";
 import ReportCard from "@/app/components/ReportCard";
 
-export default async function Page(props) {
+export default async function Page(props: any) {
     const schoolId = props.params.schoolId;
     const reports = await fetchReports(schoolId);
 

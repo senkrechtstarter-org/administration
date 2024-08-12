@@ -32,7 +32,7 @@ export default function ReportForm({
 }) {
     return (
         <form
-            action={!!report ? editReport.bind(null, school.id) : createReport}>
+            action={!!report ? editReport.bind(null, report.id) : createReport}>
             <Card className="flex flex-col rounded-xl p-4 md:p-6 ">
                 <CardBody className="gap-3">
                     <DatePicker isRequired label="Date of Visit / Contact" />

@@ -13,7 +13,7 @@ export default async function Page({
         fetchUsers(),
     ]);
     return (
-        <div>
+        <div className="p-6">
             <Breadcrumbs underline="none" radius="full" variant="solid">
                 <BreadcrumbItem href="/schools">All Schools</BreadcrumbItem>
                 <BreadcrumbItem href={`/schools/${schoolId}/edit`}>

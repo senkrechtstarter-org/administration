@@ -7,11 +7,11 @@ export default withAuth({
     },
     callbacks: {
         authorized: async ({ token, req }) => {
-            console.log("Token:", token);
-            console.log("Request:", req);
+            // console.log("Token:", token);
+            // console.log("Request:", req);
             try {
                 const user = await fetchUserByEmail(token?.email!);
-                console.log("User:", user);
+                // console.log("User:", user);
                 return !!user;
             } catch (error) {
                 console.error("Database Error:", error);

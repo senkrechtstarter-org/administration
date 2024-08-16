@@ -12,7 +12,9 @@ export async function fetchUsers() {
 
 export async function fetchSchools() {
     try {
-        return await prisma.school.findMany();
+        return await prisma.school.findMany({
+            include: { users: true },
+        });
     } catch (error) {
         console.error("Database Error:", error);
         throw new Error("Failed to fetch schools.");
@@ -64,9 +66,21 @@ export async function fetchReports(schoolId: string) {
     try {
         return await prisma.report.findMany({
             where: { schoolId },
+            include: { participants: true },
         });
     } catch (error) {
         console.error("Database Error:", error);
         throw new Error("Failed to fetch user.");
+    }
+}
+
+export async function fetchReport(id: string) {
+    try {
+        return await prisma.report.findUnique({
+            where: { id },
+        });
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch report.");
     }
 }

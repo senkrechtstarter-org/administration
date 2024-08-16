@@ -4,7 +4,7 @@ import prisma from "@/app/lib/client";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 // import { AuthError } from "next-auth";
 
 const SchoolSchema = z.object({
@@ -20,7 +20,12 @@ const SchoolSchema = z.object({
 
 const CreateSchool = SchoolSchema.omit({ id: true, last_visit: true });
 
-export async function createSchool(formData: FormData) {
+export async function createSchool(admins: any, formData: FormData) {
+    console.log(
+        "Admins: ",
+        Array.from(admins).map((id) => ({ id })),
+    );
+    const adminsArray = Array.from(admins).map((id) => ({ id }));
     console.log("Formdata: ", formData);
     const schoolData = CreateSchool.parse({
         name: formData.get("name"),
@@ -29,7 +34,12 @@ export async function createSchool(formData: FormData) {
         email: formData.get("email"),
         phone: formData.get("phone"),
         relation: formData.get("relation"),
+        users: {
+            connect: adminsArray,
+        },
     });
+
+    console.log("School data: ", schoolData);
 
     await prisma.school.create({
         data: schoolData as any,
@@ -39,15 +49,25 @@ export async function createSchool(formData: FormData) {
     redirect("/schools");
 }
 
-export async function editSchool(id: string, formData: FormData) {
+export async function editSchool(id: string, admins: any, formData: FormData) {
+    console.log(
+        "Admins: ",
+        Array.from(admins).map((id) => ({ id })),
+    );
+    const adminsArray = Array.from(admins).map((id) => ({ id }));
     const schoolData = CreateSchool.parse({
         name: formData.get("name"),
         address: formData.get("address"),
         contact_person: formData.get("contact_person"),
         email: formData.get("email"),
-        phone_number: formData.get("phone_number"),
+        phone: formData.get("phone"),
         relation: formData.get("relation"),
+        users: {
+            connect: adminsArray,
+        },
     });
+
+    console.log("School data: ", schoolData);
 
     await prisma.school.update({
         where: { id },
@@ -103,34 +123,51 @@ export async function editUser(id: string, formData: FormData) {
 }
 
 export async function deleteUser(id: string) {
-    await prisma.user.delete({
+    console.log("Deleting user with id: ", id);
+    const repsonse = await prisma.user.delete({
         where: { id },
     });
+    console.log("Response: ", repsonse);
     revalidatePath("/members");
 }
 
-export async function createReport(formData: FormData) {
+export async function createReport(
+    schoolId: string,
+    participants: any,
+    formData: FormData,
+) {
     const reportData = {
-        school_id: formData.get("school_id"),
-        user_id: formData.get("user_id"),
-        date: formData.get("date"),
+        schoolId: schoolId,
+        date: new Date(formData.get("date") as string),
         content: formData.get("content"),
+        participants: {
+            connect: Array.from(participants).map((id) => ({
+                id,
+            })),
+        },
     };
+
+    console.log("Report data: ", reportData);
 
     await prisma.report.create({
         data: reportData as any,
     });
 
-    revalidatePath("/reports");
-    redirect("/reports");
+    revalidatePath(`/schools/${schoolId}`);
+    redirect(`/schools/${schoolId}`);
 }
 
-export async function editReport(id: string, formData: FormData) {
+export async function editReport(
+    id: string,
+    schoolId: string,
+    participants: any,
+    formData: FormData,
+) {
     const reportData = {
-        school_id: formData.get("school_id"),
-        user_id: formData.get("user_id"),
+        school_id: schoolId,
         date: formData.get("date"),
         content: formData.get("content"),
+        participants: participants,
     };
 
     await prisma.report.update({

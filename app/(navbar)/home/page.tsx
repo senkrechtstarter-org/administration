@@ -2,9 +2,9 @@
 
 import { Card, CardBody, Tabs, Tab } from "@nextui-org/react";
 
-export default async function Page() {
+export default function Page() {
     return (
-        <div>
+        <div className="p-6">
             <h2 className={"mt-2 text-3xl"}>How to Senkrechtstarter</h2>
             <Tabs aria-label="Dynamic tabs" variant="underlined">
                 <Tab title="Willkommen!">
@@ -21,7 +21,7 @@ export default async function Page() {
                 <Tab title="Email">
                     <Card>
                         <CardBody>
-                            <p>
+                            <div>
                                 Über die aachen@senkrechtstarter.orgorganisieren
                                 wir ALLES was mit Senkrechtstarter zutun hat.
                                 Dies sind unter anderem Schulbesuche, andere
@@ -37,14 +37,14 @@ export default async function Page() {
                                 Angelegenheit befasst hat wie du. Du kannst dich
                                 über folgende Website und Zugangsdaten
                                 einloggen:
-                            </p>
-                            <p>Website: https://webmail.all-inkl.com</p>
-                            <p>
+                            </div>
+                            <div>Website: https://webmail.all-inkl.com</div>
+                            <div>
                                 E-Mail: aachen@senkrechtstarter.orgPasswort:
                                 AC_WfgUN4
-                            </p>
+                            </div>
                             <b>Dropbox</b>
-                            <p>
+                            <div>
                                 In der Dropbox findest du alle Materialien die
                                 in irgendeiner Form mit Senkrechtstarter zutun
                                 haben. Aktuell ist diese etwas unübersichtlich,
@@ -54,42 +54,42 @@ export default async function Page() {
                                 Halbjahresbericht, Fotos oder Beispielemails
                                 bist du hier genau richtig. Benutzername:
                                 aachen@senkrechtstarter.orgPasswort: AC_WfgUN4
-                            </p>
+                            </div>
                         </CardBody>
                     </Card>
                 </Tab>
                 <Tab title="Schulbesuche">
                     <Card>
                         <CardBody>
-                            <p>
+                            <div>
                                 Was wir bei Senkrechtstarter machen um unserem
                                 Ziel näher zu kommen möglichst vielen
                                 Schülerinnen und Schülern auf dem Weg zu ihrer
                                 Studienentscheidung zu helfen sind die folgenden
                                 Schritte:
-                            </p>
+                            </div>
 
                             <b>Kontakt zu den Schulen aufnehmen</b>
-                            <p>
+                            <div>
                                 Dies passiert meistens erstmal per Mail oder
                                 telefonisch. Oft erhält man keine Rückmeldung
                                 oder wird weitergeleitet, sodass dann oft auch
                                 ein persönlicher Besuch oder ein Gespräch mit
                                 den Oberstufenkoordinatoren oder zuständigen
                                 Lehrkräften folgt.
-                            </p>
+                            </div>
 
                             <b>Schulbesuch</b>
-                            <p>
+                            <div>
                                 Dies passiert dann im Rahmen einer
                                 Berufsorientierungsveranstaltung Formate gibt es
                                 viele, aber das Ziel ist immer das selbe: wir
                                 halten unseren Vortrag oder stehen für Fragen
                                 zur Verfügung um möglichst viele Schülerinnen
                                 und Schüler für das Projekt zu gewinnen.
-                            </p>
+                            </div>
                             <b>Liste der interessierten Schüler: </b>
-                            <p>
+                            <div>
                                 Nach den Schulbesuchen beginnt für uns die
                                 eigentliche Arbeit: wir haben eine Liste von
                                 Schülerinnern und Schülern, die sich mit
@@ -97,13 +97,13 @@ export default async function Page() {
                                 eingetragen haben diese müssen nun auf unserer
                                 Seite Stipendiaten zugeteilt werden, die eine
                                 Patenschaft übernehmen wollen.
-                            </p>
-                            <p>
+                            </div>
+                            <div>
                                 Dafür gibt es ein (halbwegs) standardisiertes
                                 Vorgehen, welches in der Datei "Patenzuteilung"
                                 genauer erklärt ist. Auch hier wird sich in
                                 Zukunft wahrscheinlich etwas ändern.
-                            </p>
+                            </div>
                         </CardBody>
                     </Card>
                 </Tab>

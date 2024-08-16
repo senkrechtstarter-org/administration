@@ -17,7 +17,9 @@ export default function RootLayout({
             <body
                 className={`${source_sans.className} antialiased max-w-screen-2xl mx-auto`}>
                 <SessionWrapper>
-                    <Providers>{children}</Providers>
+                    <Providers>
+                        <main>{children}</main>
+                    </Providers>
                 </SessionWrapper>
             </body>
         </html>

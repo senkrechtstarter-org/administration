@@ -18,22 +18,36 @@ import {
 } from "@nextui-org/react";
 import { createReport, editReport } from "@/app/lib/actions";
 import { useState } from "react";
+import { Report, School, User } from "@prisma/client";
+import { today, parseDate, getLocalTimeZone } from "@internationalized/date";
+import { I18nProvider } from "@react-aria/i18n";
 
 export default function ReportForm({
     users,
     school,
     report,
 }: {
-    users?: any;
-    school?: any;
-    report?: any;
+    users: User[];
+    school: School;
+    report?: Report & { participants: User[] };
 }) {
     console.log("Users: ", users);
+    console.log("report: ", report);
     const [participants, setParticipants] = useState(
-        new Set(report?.participants || []),
+        new Set(
+            report?.participants.map((participant: User) => participant.id) ||
+                [],
+        ),
+    );
+
+    const [date, setDate] = useState(
+        report?.date
+            ? parseDate(report.date.toISOString().substring(0, 10))
+            : today(getLocalTimeZone()),
     );
 
     console.log("particiapnts: ", participants);
+    console.log("date: ", date);
     return (
         <form
             action={
@@ -41,31 +55,39 @@ export default function ReportForm({
                     ? editReport.bind(null, report.id, school.id, participants)
                     : createReport.bind(null, school.id, participants)
             }>
-            <Card>
-                <CardHeader className="px-4">
+            <Card className="p-6">
+                <CardHeader>
                     <h3 className="font-bold text-large">
                         {!!report
-                            ? `Edit Report for ${school.name}`
-                            : `Create a New Report for ${school.name}`}
+                            ? `Bearbeite deinen Bericht für ${school.name}`
+                            : `Erstelle einen neuen Bericht für ${school.name}`}
                     </h3>
                 </CardHeader>
                 <CardBody className="gap-3">
-                    <DatePicker
-                        isRequired
-                        name="date"
-                        label="Date of Visit / Contact"
-                    />
+                    <I18nProvider locale="de-DE-u-ca-german">
+                        <DatePicker
+                            showMonthAndYearPickers
+                            value={date}
+                            onChange={setDate}
+                            isRequired
+                            name="date"
+                            label="Datum"
+                        />
+                    </I18nProvider>
+
                     <Textarea
                         name="content"
                         isRequired
-                        label="Description"
+                        label="Bericht"
+                        defaultValue={report?.content}
                         placeholder="Enter your description"
                     />
                     <Select
-                        label="Participants"
+                        label="Teilnehmner"
                         selectedKeys={participants as any}
                         onSelectionChange={setParticipants as any}
                         placeholder="Konrad Adenauer"
+                        // defaultSelectedKeys={participants.map()}
                         selectionMode="multiple">
                         {users.map((user: any) => (
                             <SelectItem key={user.id}>{user.name}</SelectItem>
@@ -73,11 +95,11 @@ export default function ReportForm({
                     </Select>
                 </CardBody>
                 <CardFooter className="flex justify-end gap-4">
-                    <Link href={"/schools"}>
-                        <Button>Cancel</Button>
+                    <Link href={`/schools/${school.id}/reports`}>
+                        <Button>Abbrechen</Button>
                     </Link>
                     <Button color="primary" type="submit">
-                        {!!report ? "Edit Report" : "Create Report"}
+                        {!!report ? "Speichern" : "Erstellen"}
                     </Button>
                 </CardFooter>
             </Card>

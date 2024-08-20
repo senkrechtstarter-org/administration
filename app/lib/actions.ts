@@ -157,8 +157,8 @@ export async function createReport(
         data: reportData as any,
     });
 
-    revalidatePath(`/schools/${schoolId}`);
-    redirect(`/schools/${schoolId}`);
+    revalidatePath(`/schools/${schoolId}/reports`);
+    redirect(`/schools/${schoolId}/reports`);
 }
 
 export async function editReport(
@@ -168,19 +168,30 @@ export async function editReport(
     formData: FormData,
 ) {
     const reportData = {
-        school_id: schoolId,
-        date: formData.get("date"),
+        schoolId: schoolId,
+        date: new Date(formData.get("date") as string),
         content: formData.get("content"),
         participants: participants,
     };
+
+    console.log("Report data: ", reportData);
 
     await prisma.report.update({
         where: { id },
         data: reportData as any,
     });
 
-    revalidatePath("/reports");
-    redirect("/reports");
+    revalidatePath(`/schools/${schoolId}/reports`);
+    redirect(`/schools/${schoolId}/reports`);
+}
+
+export async function deleteReport(id: string) {
+    console.log("Deleting report with id: ", id);
+    const repsonse = await prisma.report.delete({
+        where: { id },
+    });
+    console.log("Response: ", repsonse);
+    revalidatePath("/members");
 }
 
 export async function authenticate(prevState: string | undefined) {

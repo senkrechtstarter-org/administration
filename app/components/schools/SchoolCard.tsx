@@ -58,14 +58,14 @@ export default function SchoolCard({ school }: { school: any }) {
                                 Berichte Ansehen
                             </DropdownItem>
 
-                            <DropdownItem key="edit">Edit</DropdownItem>
+                            <DropdownItem key="edit">Bearbeiten</DropdownItem>
 
                             <DropdownItem
                                 key="delete"
                                 className="text-danger"
                                 color="danger"
                                 onClick={() => deleteSchool(school.id)}>
-                                Delete
+                                Löschen
                                 {/* <DeleteSchoolButton id={school.id} /> */}
                             </DropdownItem>
                         </DropdownMenu>
@@ -74,16 +74,16 @@ export default function SchoolCard({ school }: { school: any }) {
             </CardHeader>
             <CardBody className="py-2">
                 <div className="flex flex-col justify-between gap-3">
-                    <div className="text-gray-500">Email: {school.email}</div>
+                    <div className="text-gray-500">E-Mail: {school.email}</div>
                     <div className="text-gray-500">
-                        Address: {school.address}
+                        Addresse: {school.address}
                     </div>
                     <div className="text-gray-500">
-                        Contact Person: {school.contact_person}
+                        Kontaktperson: {school.contact_person}
                     </div>
-                    <div className="text-gray-500">Phone: {school.phone}</div>
+                    <div className="text-gray-500">Telefon: {school.phone}</div>
                     <div className="text-gray-500">
-                        Relation: {school.relation}
+                        Verhältnis: {school.relation}
                     </div>
                 </div>
             </CardBody>

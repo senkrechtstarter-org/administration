@@ -77,6 +77,7 @@ export async function fetchReport(id: string) {
     try {
         return await prisma.report.findUnique({
             where: { id },
+            include: { participants: true },
         });
     } catch (error) {
         console.error("Database Error:", error);

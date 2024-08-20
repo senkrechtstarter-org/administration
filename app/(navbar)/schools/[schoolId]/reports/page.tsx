@@ -14,8 +14,8 @@ export default async function Page({
 
     return (
         <div className="p-6">
-            <div className="flex justify-between mb-2">
-                <h2 className={`mb-4 text-2xl`}>Berichte für {school?.name}</h2>
+            <div className="flex justify-between items-center mb-6">
+                <h2 className={`text-2xl`}>Berichte für {school?.name}</h2>
                 <Link href={`/schools/${schoolId}/reports/create`}>
                     <Button color="primary">Neuen Bericht Hinzufügen</Button>
                 </Link>
@@ -26,7 +26,11 @@ export default async function Page({
                     <div className="text-gray-500">No reports found</div>
                 )}
                 {reports.map((report) => (
-                    <ReportCard key={report.id} report={report} />
+                    <ReportCard
+                        key={report.id}
+                        report={report}
+                        schoolId={schoolId}
+                    />
                 ))}
             </div>
         </div>

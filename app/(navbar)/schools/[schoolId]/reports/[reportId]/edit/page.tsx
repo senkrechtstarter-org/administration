@@ -27,7 +27,7 @@ export default async function Page({
                     Add a School
                 </BreadcrumbItem>
             </Breadcrumbs> */}
-            <ReportForm report={report} users={users} school={school} />
+            <ReportForm report={report!} users={users} school={school!} />
         </div>
     );
 }

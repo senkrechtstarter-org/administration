@@ -5,7 +5,7 @@ import { Card, CardBody, Tabs, Tab } from "@nextui-org/react";
 export default function Page() {
     return (
         <div className="p-6">
-            <h2 className={"mt-2 text-3xl"}>How to Senkrechtstarter</h2>
+            <h2 className={"mt-2 text-2xl"}>How to Senkrechtstarter</h2>
             <Tabs aria-label="Dynamic tabs" variant="underlined">
                 <Tab title="Willkommen!">
                     <Card>

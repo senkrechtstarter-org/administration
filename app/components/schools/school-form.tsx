@@ -39,8 +39,6 @@ export default function SchoolForm({
         new Set(school?.users.map((user) => user.id) || []),
     );
 
-    console.log("Admins: ", admins);
-
     return (
         <form
             action={(formData) =>
@@ -49,18 +47,18 @@ export default function SchoolForm({
                     : createSchool(admins, formData)
             }>
             <Card>
-                <CardHeader className="px-4">
+                <CardHeader className="p-4">
                     <h3 className="font-bold text-large">
                         {!!school
-                            ? `Edit School ${school.name}`
-                            : "Create a New School"}
+                            ? `Bearbeite ${school.name}`
+                            : "Neue Schule Erstellen"}
                     </h3>
                 </CardHeader>
-                <CardBody className="flex flex-col gap-3 rounded-xl p-4 md:p-6">
+                <CardBody className="flex flex-col gap-4 rounded-xl p-4 md:p-6">
                     {/* School Name */}
                     <Input
                         isRequired
-                        label="School Name"
+                        label="Name der Schule"
                         labelPlacement="inside"
                         name="name"
                         placeholder="Enter school name"
@@ -74,7 +72,7 @@ export default function SchoolForm({
                     {/* Address */}
                     <Input
                         isRequired
-                        label="Address"
+                        label="Addresse"
                         labelPlacement="inside"
                         name="address"
                         placeholder="Enter address"
@@ -88,7 +86,7 @@ export default function SchoolForm({
                     {/* Contact Person */}
                     <Input
                         isRequired
-                        label="Contact Person"
+                        label="Kontaktperson"
                         labelPlacement="inside"
                         name="contact_person"
                         placeholder="Enter contact person"
@@ -102,7 +100,7 @@ export default function SchoolForm({
                     {/* Email */}
                     <Input
                         isRequired
-                        label="Email"
+                        label="E-Mail"
                         name="email"
                         placeholder="Enter email"
                         defaultValue={school?.email}
@@ -115,7 +113,7 @@ export default function SchoolForm({
                     {/* Phone Number */}
                     <Input
                         isRequired
-                        label="Phone Number"
+                        label="Telefonnummer"
                         name="phone"
                         placeholder="Enter phone number"
                         defaultValue={school?.phone}
@@ -140,7 +138,7 @@ export default function SchoolForm({
 
                     {/* School Relation */}
                     <RadioGroup
-                        label="School relation"
+                        label="Verhältnis"
                         orientation="horizontal"
                         defaultValue={school?.relation}
                         name="relation">
@@ -148,20 +146,20 @@ export default function SchoolForm({
                             <Chip
                                 color="success"
                                 endContent={<CheckIcon className="w-4 mr-1" />}>
-                                Good
+                                Gut
                             </Chip>
                         </Radio>
                         <Radio value="MIDDLE">
                             <Chip
                                 endContent={<ScaleIcon className="w-4 mr-1" />}>
-                                Middle
+                                Mittel
                             </Chip>
                         </Radio>
                         <Radio value="BAD">
                             <Chip
                                 color="danger"
                                 endContent={<XMarkIcon className="w-4 mr-1" />}>
-                                Bad
+                                Schlecht
                             </Chip>
                         </Radio>
                     </RadioGroup>
@@ -169,10 +167,10 @@ export default function SchoolForm({
 
                 <CardFooter className="flex justify-end gap-4">
                     <Link href={"/schools"}>
-                        <Button>Cancel</Button>
+                        <Button>Abbrechen</Button>
                     </Link>
                     <Button color="primary" type="submit">
-                        {!!school ? "Edit School" : "Create School"}
+                        {!!school ? "Speichern" : "Erstellen"}
                     </Button>
                 </CardFooter>
             </Card>

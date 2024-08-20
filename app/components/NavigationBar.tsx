@@ -19,7 +19,7 @@ export default function NavigationBar() {
             <NavbarBrand>
                 <SenkrechtstarterLogo />
             </NavbarBrand>
-            <NavbarContent justify="start">
+            <NavbarContent justify="center">
                 <NavbarItem>
                     <Link href="/home">Info</Link>
                 </NavbarItem>

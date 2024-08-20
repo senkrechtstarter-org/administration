@@ -10,7 +10,7 @@ export default async function Page() {
     return (
         <div className="p-6">
             <div className="flex justify-between mb-2">
-                <h2 className={`mb-4 text-3xl`}>Schulenübersicht</h2>
+                <h2 className={`mb-4 text-2xl`}>Schulenübersicht</h2>
                 <Link href="/schools/create">
                     <Button color="primary">Neue Schule Hinzufügen</Button>
                 </Link>

@@ -12,6 +12,9 @@ export default async function Page({
         fetchSchool(schoolId),
         fetchUsers(),
     ]);
+
+    console.log("School from edit page: ", school);
+    console.log("Users: ", users);
     return (
         <div className="p-6">
             <Breadcrumbs underline="none" radius="full" variant="solid">

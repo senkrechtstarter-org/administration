@@ -1,8 +1,10 @@
 import "@/app/components/global.css";
 
-import { source_sans } from "./components/fonts";
+import { inter } from "./components/fonts";
 import SessionWrapper from "./components/SessionWrapper";
 import { Providers } from "./providers";
+
+// export const experimental_ppr = true;
 
 export default function RootLayout({
     children,
@@ -15,7 +17,7 @@ export default function RootLayout({
                 <title>Senkrechtstarter Aachen</title>
             </head>
             <body
-                className={`${source_sans.className} antialiased max-w-screen-2xl mx-auto`}>
+                className={`${inter.className} antialiased max-w-screen-2xl mx-auto`}>
                 <SessionWrapper>
                     <Providers>
                         <main>{children}</main>

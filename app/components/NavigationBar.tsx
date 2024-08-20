@@ -21,16 +21,16 @@ export default function NavigationBar() {
             </NavbarBrand>
             <NavbarContent justify="start">
                 <NavbarItem>
-                    <Link href="/home">Home</Link>
+                    <Link href="/home">Info</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link href="/schools">Schools</Link>
+                    <Link href="/schools">Schulen</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link href="/members">Members</Link>
+                    <Link href="/members">Mitglieder</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link href="/materials">Materials</Link>
+                    <Link href="/materials">Materialien</Link>
                 </NavbarItem>
             </NavbarContent>
 
@@ -45,7 +45,7 @@ export default function NavigationBar() {
                             signOut();
                         }}
                         startContent={<PowerIcon className="w-5" />}>
-                        <div className="hidden md:block">Sign Out</div>
+                        <div className="hidden md:block">Ausloggen</div>
                     </Button>
                 </NavbarItem>
             </NavbarContent>

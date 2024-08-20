@@ -35,16 +35,18 @@ export default function SchoolForm({
     school?: any;
 }) {
     console.log("School: ", school);
-    const [admins, setAdmins] = useState<any>(new Set(school.users || []));
+    const [admins, setAdmins] = useState<any>(
+        new Set(school?.users.map((user) => user.id) || []),
+    );
 
     console.log("Admins: ", admins);
 
     return (
         <form
-            action={
+            action={(formData) =>
                 !!school
-                    ? editSchool.bind(null, school.id, admins)
-                    : createSchool.bind(null, admins)
+                    ? editSchool(school.id, admins, formData)
+                    : createSchool(admins, formData)
             }>
             <Card>
                 <CardHeader className="px-4">
@@ -126,7 +128,9 @@ export default function SchoolForm({
                     <Select
                         label="Zuständige"
                         selectedKeys={admins}
-                        onSelectionChange={setAdmins as any}
+                        onChange={(e) =>
+                            setAdmins(new Set(e.target.value.split(",")))
+                        }
                         placeholder="Konrad Adenauer"
                         selectionMode="multiple">
                         {users.map((user: any) => (

@@ -15,9 +15,9 @@ export default async function Page({
     return (
         <div className="p-6">
             <div className="flex justify-between mb-2">
-                <h2 className={`mb-4 text-3xl`}>Reports for {school?.name}</h2>
+                <h2 className={`mb-4 text-2xl`}>Berichte für {school?.name}</h2>
                 <Link href={`/schools/${schoolId}/reports/create`}>
-                    <Button color="primary">Add a New Report</Button>
+                    <Button color="primary">Neuen Bericht Hinzufügen</Button>
                 </Link>
             </div>
 

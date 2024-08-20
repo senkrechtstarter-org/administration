@@ -12,7 +12,7 @@ export default async function Page({
     return (
         <div>
             <Breadcrumbs underline="none" variant="solid">
-                <BreadcrumbItem href="/members">All Members</BreadcrumbItem>
+                <BreadcrumbItem href="/members">Mitglieder</BreadcrumbItem>
                 <BreadcrumbItem href={`/members/${userId}/edit`}>
                     {user?.name}
                 </BreadcrumbItem>

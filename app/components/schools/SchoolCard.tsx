@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Avatar,
     Button,
@@ -6,17 +8,69 @@ import {
     CardFooter,
     CardHeader,
     Chip,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownTrigger,
 } from "@nextui-org/react";
-import { DeleteSchoolButton } from "../buttons";
 import Link from "next/link";
-import { PencilIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { deleteSchool } from "@/app/lib/actions";
 
 export default function SchoolCard({ school }: { school: any }) {
+    const router = useRouter();
     console.log("School: ", school);
     return (
-        <Card className="p-4">
-            <CardHeader>
+        <Card className="w-full p-4">
+            <CardHeader className="flex justify-between" title={school.name}>
                 <h1 className="font-bold text-lg">{school.name}</h1>
+                <div className="flex gap-4 items-center">
+                    <div className="flex gap-4">
+                        {school.users.map((admin: any) => (
+                            <Chip
+                                key={admin.id}
+                                variant="flat"
+                                avatar={<Avatar name={admin.name[0]} />}>
+                                {admin.name}
+                            </Chip>
+                        ))}
+                    </div>
+                    <Dropdown showArrow>
+                        <DropdownTrigger>
+                            <Button isIconOnly variant="light">
+                                <EllipsisVerticalIcon className="w-6" />
+                            </Button>
+                        </DropdownTrigger>
+                        <DropdownMenu
+                            onAction={(key) => {
+                                if (key === "reports") {
+                                    router.push(
+                                        `/schools/${school.id}/reports`,
+                                    );
+                                } else if (key === "edit") {
+                                    router.push(`/schools/${school.id}/edit`);
+                                }
+                            }}
+                            aria-label="Static Actions">
+                            <DropdownItem key="reports">
+                                Berichte Ansehen
+                            </DropdownItem>
+
+                            <DropdownItem key="edit">Edit</DropdownItem>
+
+                            <DropdownItem
+                                key="delete"
+                                className="text-danger"
+                                color="danger"
+                                onClick={() => deleteSchool(school.id)}>
+                                Delete
+                                {/* <DeleteSchoolButton id={school.id} /> */}
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                </div>
             </CardHeader>
             <CardBody className="py-2">
                 <div className="flex flex-col justify-between gap-3">
@@ -31,29 +85,8 @@ export default function SchoolCard({ school }: { school: any }) {
                     <div className="text-gray-500">
                         Relation: {school.relation}
                     </div>
-                    <div className="flex gap-4">
-                        {school.users.map((admin: any) => (
-                            <Chip
-                                key={admin.id}
-                                variant="flat"
-                                avatar={<Avatar name="JW" />}>
-                                {admin.name}
-                            </Chip>
-                        ))}
-                    </div>
                 </div>
             </CardBody>
-            <CardFooter className="flex flew-row justify-end gap-3">
-                <Link key={school.id} href={`/schools/${school.id}`}>
-                    <Button>View Reports</Button>
-                </Link>
-                <Link href={`/schools/${school.id}/edit`}>
-                    <Button isIconOnly>
-                        <PencilIcon className="w-5" />
-                    </Button>
-                </Link>
-                <DeleteSchoolButton id={school.id} />
-            </CardFooter>
         </Card>
     );
 }

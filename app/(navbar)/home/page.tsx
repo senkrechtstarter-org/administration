@@ -9,7 +9,7 @@ export default function Page() {
             <Tabs aria-label="Dynamic tabs" variant="underlined">
                 <Tab title="Willkommen!">
                     <Card>
-                        <CardBody>
+                        <CardBody className="p-8">
                             Schön, dass du neu bei Senkrechtstarter dabei bist!
                             Dieses Merkblatt soll dir den Einstieg in der Gruppe
                             hier in Aachen etwas erleichtern, selbstverständlich
@@ -20,7 +20,7 @@ export default function Page() {
                 </Tab>
                 <Tab title="Email">
                     <Card>
-                        <CardBody>
+                        <CardBody className="p-8">
                             <div>
                                 Über die aachen@senkrechtstarter.orgorganisieren
                                 wir ALLES was mit Senkrechtstarter zutun hat.
@@ -60,7 +60,7 @@ export default function Page() {
                 </Tab>
                 <Tab title="Schulbesuche">
                     <Card>
-                        <CardBody>
+                        <CardBody className="p-8">
                             <div>
                                 Was wir bei Senkrechtstarter machen um unserem
                                 Ziel näher zu kommen möglichst vielen

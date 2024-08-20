@@ -1,40 +1,7 @@
-import { deleteSchool, deleteUser } from "@/app/lib/actions";
+import { deleteSchool } from "@/app/lib/actions";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
-
-export function UpdateMemberbutton({ id }: { id: string }) {
-    return (
-        <Link href={`/members/${id}/edit`}>
-            <Button isIconOnly>
-                <PencilIcon className="w-5" />
-            </Button>
-        </Link>
-    );
-}
-
-export function DeleteSchoolButton({ id }: { id: string }) {
-    const deleteSchoolWithId = deleteSchool.bind(null, id);
-    return (
-        <form action={deleteSchoolWithId}>
-            <Button color="danger" isIconOnly>
-                <TrashIcon className="w-5" />
-            </Button>
-        </form>
-    );
-}
-
-export function DeleteUserButton({ id }: { id: string }) {
-    const deleteUserWithId = deleteUser.bind(null, id);
-
-    return (
-        <form action={deleteUserWithId}>
-            <Button color="danger" isIconOnly>
-                <TrashIcon className="w-5" />
-            </Button>
-        </form>
-    );
-}
 
 export function UpdateReportButton({
     schoolId,

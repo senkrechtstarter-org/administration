@@ -16,7 +16,7 @@ export default function LoginForm() {
                         signIn("google", { callbackUrl: "/schools" });
                     }}
                     endContent={<ArrowRightIcon className="w-6 " />}>
-                    Sign in with Google
+                    Log dich mit Google ein!
                 </Button>
             </div>
         </div>

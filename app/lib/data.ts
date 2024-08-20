@@ -1,5 +1,4 @@
 import prisma from "@/app/lib/client";
-import { sql } from "@vercel/postgres";
 
 export async function fetchUsers() {
     try {

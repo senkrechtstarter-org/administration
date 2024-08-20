@@ -20,14 +20,15 @@ const SchoolSchema = z.object({
 
 const CreateSchool = SchoolSchema.omit({ id: true, last_visit: true });
 
-export async function createSchool(admins: any, formData: FormData) {
+export async function createSchool(admins: Set<any>, formData: FormData) {
     console.log(
-        "Admins: ",
+        "Admins from create school: ",
         Array.from(admins).map((id) => ({ id })),
     );
     const adminsArray = Array.from(admins).map((id) => ({ id }));
     console.log("Formdata: ", formData);
-    const schoolData = CreateSchool.parse({
+
+    const schoolData = {
         name: formData.get("name"),
         address: formData.get("address"),
         contact_person: formData.get("contact_person"),
@@ -37,7 +38,7 @@ export async function createSchool(admins: any, formData: FormData) {
         users: {
             connect: adminsArray,
         },
-    });
+    };
 
     console.log("School data: ", schoolData);
 
@@ -51,11 +52,12 @@ export async function createSchool(admins: any, formData: FormData) {
 
 export async function editSchool(id: string, admins: any, formData: FormData) {
     console.log(
-        "Admins: ",
+        "Admins from create school: ",
         Array.from(admins).map((id) => ({ id })),
     );
     const adminsArray = Array.from(admins).map((id) => ({ id }));
-    const schoolData = CreateSchool.parse({
+
+    const schoolData = {
         name: formData.get("name"),
         address: formData.get("address"),
         contact_person: formData.get("contact_person"),
@@ -65,7 +67,7 @@ export async function editSchool(id: string, admins: any, formData: FormData) {
         users: {
             connect: adminsArray,
         },
-    });
+    };
 
     console.log("School data: ", schoolData);
 
@@ -79,9 +81,11 @@ export async function editSchool(id: string, admins: any, formData: FormData) {
 }
 
 export async function deleteSchool(id: string) {
+    console.log("Deleting school with id: ", id);
     await prisma.school.delete({
         where: { id },
     });
+
     revalidatePath("/schools");
 }
 

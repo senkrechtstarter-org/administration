@@ -9,9 +9,9 @@ export default async function Page() {
     return (
         <div className="p-6">
             <div className="flex justify-between">
-                <h2 className={`mb-4 mt-1 text-3xl `}>All Members</h2>
+                <h2 className={`mb-4 mt-1 text-2xl `}>Mitgliederübersicht</h2>
                 <Link href="/members/create">
-                    <Button color="primary">Add a New Member</Button>
+                    <Button color="primary">Neues Mitglied Hinzufügen</Button>
                 </Link>
             </div>
 

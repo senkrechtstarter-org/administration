@@ -6,7 +6,6 @@ import SchoolCard from "@/app/components/schools/SchoolCard";
 
 export default async function Page() {
     const schools = await fetchSchools();
-
     return (
         <div className="p-6">
             <div className="flex justify-between mb-2">

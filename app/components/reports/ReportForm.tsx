@@ -18,25 +18,24 @@ import {
 } from "@nextui-org/react";
 import { createReport, editReport } from "@/app/lib/actions";
 import { useState } from "react";
-import { Report, School, User } from "@prisma/client";
 import { today, parseDate, getLocalTimeZone } from "@internationalized/date";
 import { I18nProvider } from "@react-aria/i18n";
+import { AnyAaaaRecord } from "dns";
 
 export default function ReportForm({
     users,
     school,
     report,
+    participants: participantsData,
 }: {
-    users: User[];
-    school: School;
-    report?: Report & { participants: User[] };
+    users: any[];
+    school: any;
+    report?: any;
+    participants?: any[];
 }) {
-    console.log("Users: ", users);
-    console.log("report: ", report);
     const [participants, setParticipants] = useState(
         new Set(
-            report?.participants.map((participant: User) => participant.id) ||
-                [],
+            participantsData?.map((participant: any) => participant.id) || [],
         ),
     );
 
@@ -46,8 +45,6 @@ export default function ReportForm({
             : today(getLocalTimeZone()),
     );
 
-    console.log("particiapnts: ", participants);
-    console.log("date: ", date);
     return (
         <form
             action={

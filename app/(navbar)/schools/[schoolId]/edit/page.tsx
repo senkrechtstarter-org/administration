@@ -1,4 +1,4 @@
-import { fetchUsers, fetchSchool } from "@/app/lib/data";
+import { fetchUsers, fetchSchool, fetchAdmins } from "@/app/lib/data";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import SchoolForm from "@/app/components/schools/school-form";
 
@@ -8,13 +8,12 @@ export default async function Page({
     params: { schoolId: string };
 }) {
     const schoolId = params.schoolId;
-    const [school, users] = await Promise.all([
+    const [school, users, admins] = await Promise.all([
         fetchSchool(schoolId),
         fetchUsers(),
+        fetchAdmins(schoolId),
     ]);
 
-    console.log("School from edit page: ", school);
-    console.log("Users: ", users);
     return (
         <div className="p-6">
             <Breadcrumbs underline="none" radius="full" variant="solid">
@@ -23,7 +22,7 @@ export default async function Page({
                     Edit {school?.name}
                 </BreadcrumbItem>
             </Breadcrumbs>
-            <SchoolForm users={users} school={school} />
+            <SchoolForm users={users} school={school} admins={admins} />
         </div>
     );
 }

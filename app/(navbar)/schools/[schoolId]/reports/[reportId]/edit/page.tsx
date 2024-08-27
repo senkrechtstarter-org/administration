@@ -1,6 +1,7 @@
 import SchoolForm from "@/app/components/schools/school-form";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import {
+    fetchParticipants,
     fetchReport,
     fetchReports,
     fetchSchool,
@@ -13,10 +14,11 @@ export default async function Page({
 }: {
     params: { schoolId: string; reportId: string };
 }) {
-    const [report, school, users] = await Promise.all([
+    const [report, school, users, participants] = await Promise.all([
         fetchReport(params.reportId),
         fetchSchool(params.schoolId),
         fetchUsers(),
+        fetchParticipants(params.reportId),
     ]);
 
     return (
@@ -27,7 +29,12 @@ export default async function Page({
                     Add a School
                 </BreadcrumbItem>
             </Breadcrumbs> */}
-            <ReportForm report={report!} users={users} school={school!} />
+            <ReportForm
+                report={report!}
+                users={users}
+                school={school!}
+                participants={participants}
+            />
         </div>
     );
 }

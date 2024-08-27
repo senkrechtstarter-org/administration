@@ -26,18 +26,19 @@ import {
 import { createSchool, editSchool } from "@/app/lib/actions";
 import { Input } from "@nextui-org/react";
 import { useState } from "react";
-import { User } from "@prisma/client";
+import { fetchAdmins } from "@/app/lib/data";
 
 export default function SchoolForm({
     users,
     school,
+    admins: adminsData,
 }: {
     users?: any;
     school?: any;
+    admins?: any;
 }) {
-    console.log("School: ", school);
     const [admins, setAdmins] = useState<any>(
-        new Set(school?.users.map((user: User) => user.id) || []),
+        new Set(adminsData?.map((admin: any) => admin.id) || []),
     );
 
     return (

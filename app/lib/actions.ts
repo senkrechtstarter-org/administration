@@ -1,10 +1,10 @@
 "use server";
 
-import prisma from "@/app/lib/client";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { sql } from "@vercel/postgres";
 // import { AuthError } from "next-auth";
 
 const SchoolSchema = z.object({
@@ -21,59 +21,44 @@ const SchoolSchema = z.object({
 const CreateSchool = SchoolSchema.omit({ id: true, last_visit: true });
 
 export async function createSchool(admins: Set<any>, formData: FormData) {
-    console.log(
-        "Admins from create school: ",
-        Array.from(admins).map((id) => ({ id })),
-    );
     const adminsArray = Array.from(admins).map((id) => ({ id }));
-    console.log("Formdata: ", formData);
 
     const schoolData = {
-        name: formData.get("name"),
-        address: formData.get("address"),
-        contact_person: formData.get("contact_person"),
-        email: formData.get("email"),
-        phone: formData.get("phone"),
-        relation: formData.get("relation"),
-        users: {
-            connect: adminsArray,
-        },
+        name: formData.get("name")?.toString(),
+        address: formData.get("address")?.toString(),
+        contact_person: formData.get("contact_person")?.toString(),
+        email: formData.get("email")?.toString(),
+        phone: formData.get("phone")?.toString(),
+        relation: formData.get("relation")?.toString(),
     };
 
-    console.log("School data: ", schoolData);
+    await sql`INSERT INTO school (name, address, contact_person, email, phone, relation) VALUES (${schoolData.name}, ${schoolData.address}, ${schoolData.contact_person}, ${schoolData.email}, ${schoolData.phone}, ${schoolData.relation})`;
 
-    await prisma.school.create({
-        data: schoolData as any,
+    adminsArray.forEach(async (admin) => {
+        await sql`INSERT INTO admin (school_id, member_id) VALUES ((SELECT id FROM school WHERE name = ${schoolData.name}), ${admin.id})`;
     });
-
     revalidatePath("/schools");
     redirect("/schools");
 }
 
 export async function editSchool(id: string, admins: any, formData: FormData) {
-    console.log(
-        "Admins from create school: ",
-        Array.from(admins).map((id) => ({ id })),
-    );
     const adminsArray = Array.from(admins).map((id) => ({ id }));
 
     const schoolData = {
-        name: formData.get("name"),
-        address: formData.get("address"),
-        contact_person: formData.get("contact_person"),
-        email: formData.get("email"),
-        phone: formData.get("phone"),
-        relation: formData.get("relation"),
-        users: {
-            connect: adminsArray,
-        },
+        name: formData.get("name")?.toString(),
+        address: formData.get("address")?.toString(),
+        contact_person: formData.get("contact_person")?.toString(),
+        email: formData.get("email")?.toString(),
+        phone: formData.get("phone")?.toString(),
+        relation: formData.get("relation")?.toString(),
     };
 
-    console.log("School data: ", schoolData);
+    await sql`UPDATE School SET name = ${schoolData.name}, address = ${schoolData.address}, contact_person = ${schoolData.contact_person}, email = ${schoolData.email}, phone = ${schoolData.phone}, relation = ${schoolData.relation} WHERE id = ${id}`;
 
-    await prisma.school.update({
-        where: { id },
-        data: schoolData as any,
+    adminsArray.forEach(async (admin) => {
+        await sql`INSERT INTO admin (school_id, member_id) VALUES (${id}, ${
+            admin.id as string
+        })`;
     });
 
     revalidatePath("/schools");
@@ -81,10 +66,7 @@ export async function editSchool(id: string, admins: any, formData: FormData) {
 }
 
 export async function deleteSchool(id: string) {
-    console.log("Deleting school with id: ", id);
-    await prisma.school.delete({
-        where: { id },
-    });
+    await sql`DELETE FROM School WHERE id = ${id}`;
 
     revalidatePath("/schools");
 }
@@ -103,10 +85,7 @@ export async function createUser(formData: FormData) {
         email: formData.get("email"),
     });
 
-    await prisma.user.create({
-        data: userData,
-    });
-
+    await sql`INSERT INTO member (name, email) VALUES (${userData.name}, ${userData.email})`;
     revalidatePath("/members");
     redirect("/members");
 }
@@ -117,44 +96,35 @@ export async function editUser(id: string, formData: FormData) {
         email: formData.get("email"),
     });
 
-    await prisma.user.update({
-        where: { id },
-        data: userData,
-    });
+    await sql`UPDATE member SET name = ${userData.name}, email = ${userData.email} WHERE id = ${id}`;
 
     revalidatePath("/members");
     redirect("/members");
 }
 
 export async function deleteUser(id: string) {
-    console.log("Deleting user with id: ", id);
-    const repsonse = await prisma.user.delete({
-        where: { id },
-    });
-    console.log("Response: ", repsonse);
+    await sql`DELETE FROM member WHERE id = ${id}`;
     revalidatePath("/members");
 }
 
 export async function createReport(
     schoolId: string,
-    participants: any,
+    participantsData: any,
     formData: FormData,
 ) {
     const reportData = {
         schoolId: schoolId,
-        date: new Date(formData.get("date") as string),
-        content: formData.get("content"),
-        participants: {
-            connect: Array.from(participants).map((id) => ({
-                id,
-            })),
-        },
+        date: new Date(formData.get("date") as string).toDateString(),
+        content: formData.get("content")?.toString(),
     };
 
-    console.log("Report data: ", reportData);
+    const participants = Array.from(participantsData).map((id) => ({ id }));
 
-    await prisma.report.create({
-        data: reportData as any,
+    const response =
+        await sql`INSERT INTO report (school_id, date, content) VALUES (${reportData.schoolId}, ${reportData.date}, ${reportData.content}) RETURNING id`;
+
+    participants.forEach(async (participant: any) => {
+        await sql`INSERT INTO participant (report_id, member_id) VALUES (${response.rows[0].id}, ${participant.id})`;
     });
 
     revalidatePath(`/schools/${schoolId}/reports`);
@@ -169,28 +139,28 @@ export async function editReport(
 ) {
     const reportData = {
         schoolId: schoolId,
-        date: new Date(formData.get("date") as string),
-        content: formData.get("content"),
+        date: new Date(formData.get("date") as string).toDateString(),
+        content: formData.get("content")?.toString(),
         participants: participants,
     };
 
-    console.log("Report data: ", reportData);
+    await sql`UPDATE report SET date = ${reportData.date}, content = ${reportData.content} WHERE id = ${id}`;
 
-    await prisma.report.update({
-        where: { id },
-        data: reportData as any,
+    participants.forEach(async (participant: any) => {
+        await sql`INSERT INTO participant (report_id, member_id) VALUES (${id}, ${participant.id})`;
     });
+
+    // await prisma.report.update({
+    //     where: { id },
+    //     data: reportData as any,
+    // });
 
     revalidatePath(`/schools/${schoolId}/reports`);
     redirect(`/schools/${schoolId}/reports`);
 }
 
 export async function deleteReport(id: string) {
-    console.log("Deleting report with id: ", id);
-    const repsonse = await prisma.report.delete({
-        where: { id },
-    });
-    console.log("Response: ", repsonse);
+    await sql`DELETE FROM report WHERE id = ${id}`;
     revalidatePath("/members");
 }
 

@@ -1,15 +1,12 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { NextResponse } from "next/server";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import prisma from "@/app/lib/client";
 
 const authOptions: NextAuthOptions = {
     pages: {
         signIn: "/login",
     },
 
-    // adapter: PrismaAdapter(prisma),
     providers: [
         GoogleProvider({
             clientId: process.env.AUTH_GOOGLE_ID!,
@@ -17,9 +14,9 @@ const authOptions: NextAuthOptions = {
         }),
     ],
     // Add session management configuration if missing
-    // session: {
-    //     strategy: "jwt", // or 'database' if you are handling sessions through the database
-    // },
+    session: {
+        strategy: "jwt", // or 'database' if you are handling sessions through the database
+    },
 };
 
 const handler = NextAuth(authOptions);

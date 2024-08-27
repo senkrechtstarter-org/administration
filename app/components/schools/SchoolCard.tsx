@@ -1,5 +1,3 @@
-"use client";
-
 import {
     Avatar,
     Button,
@@ -15,20 +13,22 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 import { PencilIcon, EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { useRouter } from "next/navigation";
+
 import React from "react";
 import { deleteSchool } from "@/app/lib/actions";
+import { fetchAdmins } from "@/app/lib/data";
+import SchoolCardDropdown from "../SchoolCardDropdown";
 
-export default function SchoolCard({ school }: { school: any }) {
-    const router = useRouter();
-    console.log("School: ", school);
+export default async function SchoolCard({ school }: { school: any }) {
+    const admins = await fetchAdmins(school.id);
+
     return (
         <Card className="w-full p-4">
             <CardHeader className="flex justify-between" title={school.name}>
                 <h1 className="font-bold text-lg">{school.name}</h1>
                 <div className="flex gap-4 items-center">
                     <div className="flex gap-4">
-                        {school.users.map((admin: any) => (
+                        {admins.map((admin: any) => (
                             <Chip
                                 key={admin.id}
                                 variant="flat"
@@ -37,39 +37,7 @@ export default function SchoolCard({ school }: { school: any }) {
                             </Chip>
                         ))}
                     </div>
-                    <Dropdown showArrow>
-                        <DropdownTrigger>
-                            <Button isIconOnly variant="light">
-                                <EllipsisVerticalIcon className="w-6" />
-                            </Button>
-                        </DropdownTrigger>
-                        <DropdownMenu
-                            onAction={(key) => {
-                                if (key === "reports") {
-                                    router.push(
-                                        `/schools/${school.id}/reports`,
-                                    );
-                                } else if (key === "edit") {
-                                    router.push(`/schools/${school.id}/edit`);
-                                }
-                            }}
-                            aria-label="Static Actions">
-                            <DropdownItem key="reports">
-                                Berichte Ansehen
-                            </DropdownItem>
-
-                            <DropdownItem key="edit">Bearbeiten</DropdownItem>
-
-                            <DropdownItem
-                                key="delete"
-                                className="text-danger"
-                                color="danger"
-                                onClick={() => deleteSchool(school.id)}>
-                                Löschen
-                                {/* <DeleteSchoolButton id={school.id} /> */}
-                            </DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
+                    <SchoolCardDropdown school={school} />
                 </div>
             </CardHeader>
             <CardBody className="py-2">

@@ -1,22 +1,15 @@
-"use client";
 import {
     Avatar,
-    Button,
     Card,
     CardBody,
     CardFooter,
     CardHeader,
     Chip,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
 } from "@nextui-org/react";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { deleteReport } from "@/app/lib/actions";
-import { useRouter } from "next/navigation";
+import ReportCardDropdown from "../ReportCardDropdown";
+import { fetchParticipants } from "@/app/lib/data";
 
-export default function ReportCard({
+export default async function ReportCard({
     report,
     schoolId,
 }: {
@@ -30,40 +23,17 @@ export default function ReportCard({
 
     const formattedDate = `${year}-${month}-${day}`;
 
-    const router = useRouter();
+    const participants = await fetchParticipants(report.id);
     return (
         <Card className="p-4">
             <CardHeader>
                 <div className="w-full flex flex-row justify-between">
                     <h1 className="font-bold text-lg">{formattedDate}</h1>
 
-                    <Dropdown showArrow>
-                        <DropdownTrigger>
-                            <Button isIconOnly variant="light">
-                                <EllipsisVerticalIcon className="w-6" />
-                            </Button>
-                        </DropdownTrigger>
-                        <DropdownMenu
-                            onAction={(key) => {
-                                if (key === "edit") {
-                                    router.push(
-                                        `/schools/${schoolId}/reports/${report.id}/edit`,
-                                    );
-                                }
-                            }}
-                            aria-label="Static Actions">
-                            <DropdownItem key="edit">Edit</DropdownItem>
-
-                            <DropdownItem
-                                key="delete"
-                                className="text-danger"
-                                color="danger"
-                                onClick={() => deleteReport(report.id)}>
-                                Delete
-                                {/* <DeleteSchoolButton id={school.id} /> */}
-                            </DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
+                    <ReportCardDropdown
+                        reportId={report.id}
+                        schoolId={schoolId}
+                    />
                 </div>
             </CardHeader>
             <CardBody className="py-2">
@@ -73,7 +43,7 @@ export default function ReportCard({
             </CardBody>
             <CardFooter className="flex flew-row justify-end gap-3">
                 <div className="flex gap-4">
-                    {report.participants.map((participant: any) => (
+                    {participants.map((participant: any) => (
                         <Chip
                             key={participant.id}
                             variant="flat"

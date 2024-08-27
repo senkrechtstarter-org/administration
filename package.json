@@ -3,19 +3,15 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "start": "next start",
-    "postinstall": "prisma generate"
+    "start": "next start"
   },
   "dependencies": {
-    "@auth/prisma-adapter": "^2.4.2",
     "@heroicons/react": "^2.1.4",
     "@internationalized/date": "^3.5.5",
     "@neondatabase/serverless": "^0.9.4",
     "@nextui-org/react": "^2.4.6",
     "@nextui-org/system": "^2.2.5",
     "@nextui-org/theme": "^2.2.9",
-    "@prisma/adapter-neon": "^5.18.0",
-    "@prisma/client": "^5.18.0",
     "@react-aria/i18n": "^3.12.2",
     "@tailwindcss/forms": "^0.5.7",
     "@vercel/postgres": "^0.8.0",
@@ -38,8 +34,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/node": "20.14.8",
     "@types/react": "18.3.3",
-    "@types/react-dom": "18.3.0",
-    "prisma": "^5.18.0"
+    "@types/react-dom": "18.3.0"
   },
   "engines": {
     "node": ">=20.12.0"

@@ -2,7 +2,6 @@ import SchoolForm from "@/app/components/schools/school-form";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import { fetchSchool, fetchUsers } from "@/app/lib/data";
 import ReportForm from "@/app/components/reports/ReportForm";
-import { School } from "@prisma/client";
 
 export default async function Page({
     params,
@@ -19,7 +18,7 @@ export default async function Page({
                     Add a School
                 </BreadcrumbItem>
             </Breadcrumbs> */}
-            <ReportForm users={users} school={school as School} />
+            <ReportForm users={users} school={school} />
         </div>
     );
 }

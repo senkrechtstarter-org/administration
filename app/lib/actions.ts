@@ -149,12 +149,6 @@ export async function editReport(
     participants.forEach(async (participant: any) => {
         await sql`INSERT INTO participant (report_id, member_id) VALUES (${id}, ${participant.id})`;
     });
-
-    // await prisma.report.update({
-    //     where: { id },
-    //     data: reportData as any,
-    // });
-
     revalidatePath(`/schools/${schoolId}/reports`);
     redirect(`/schools/${schoolId}/reports`);
 }

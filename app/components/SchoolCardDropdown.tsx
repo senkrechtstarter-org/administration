@@ -8,16 +8,17 @@ import {
     DropdownTrigger,
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import { deleteSchool } from "../lib/actions";
+import { deleteSchool, markEmailSent, markEmailUnsent } from "../lib/actions";
+import { useSession } from "next-auth/react";
 
 export default function SchoolCardDropdown({ school }: { school: any }) {
     const router = useRouter();
+    const { data: session, status } = useSession();
+    console.log("school: ", school);
     return (
         <Dropdown showArrow>
             <DropdownTrigger>
-                <Button isIconOnly variant="light">
-                    <EllipsisVerticalIcon className="w-6" />
-                </Button>
+                <EllipsisVerticalIcon className="w-6" />
             </DropdownTrigger>
             <DropdownMenu
                 onAction={(key) => {
@@ -27,11 +28,21 @@ export default function SchoolCardDropdown({ school }: { school: any }) {
                         router.push(`/schools/${school.id}/edit`);
                     }
                 }}
-                aria-label="Static Actions">
+                aria-label="Static Actions"
+                disabledKeys={session?.user?.isSpeaker ? [] : ["delete"]}>
                 <DropdownItem key="reports">Berichte Ansehen</DropdownItem>
-
                 <DropdownItem key="edit">Bearbeiten</DropdownItem>
-
+                <DropdownItem
+                    key="email-sent"
+                    onClick={() => {
+                        school.email_sent
+                            ? markEmailSent(school.id)
+                            : markEmailUnsent(school.id);
+                    }}>
+                    {school.email_sent
+                        ? "Als unversendet Markieren"
+                        : "Als versendet Markieren"}
+                </DropdownItem>
                 <DropdownItem
                     key="delete"
                     className="text-danger"

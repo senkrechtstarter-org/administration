@@ -19,7 +19,7 @@ export default async function Page() {
                 {users.length === 0 && (
                     <div className="text-gray-500">No users found</div>
                 )}
-                {users.map((user) => (
+                {users.sort().map((user) => (
                     <UserCard key={user.id} user={user} />
                 ))}
             </div>

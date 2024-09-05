@@ -11,19 +11,36 @@ export async function fetchUsers() {
 }
 
 export async function fetchSchools() {
+    const schools: any[] = [];
     try {
-        const response = await sql`SELECT * FROM school`;
-        return response.rows;
+        const schoolIds = (await sql`SELECT id FROM school`).rows.map(
+            (x) => x.id,
+        );
+        console.log("school ids: ", schoolIds);
+
+        for (const schoolId of schoolIds) {
+            const school = await fetchSchool(schoolId);
+            console.log("School in fetchschools: ", school);
+            schools.push(school);
+        }
+
+        console.log("Resulting schools: ", schools);
+
+        return schools;
     } catch (error) {
         console.error("Database Error:", error);
         throw new Error("Failed to fetch schools.");
     }
 }
 
-export async function fetchSchool(id: string) {
+export async function fetchSchool(schoolId: string) {
     try {
-        const response = await sql`SELECT * FROM school WHERE id = ${id}`;
-        return response.rows[0];
+        const school = (await sql`SELECT * FROM school where id = ${schoolId}`)
+            .rows[0];
+        const admins = await fetchAdmins(schoolId);
+        school.admins = admins;
+        console.log("School after adding admins: ", school);
+        return school;
     } catch (error) {
         console.error("Database Error:", error);
         throw new Error("Failed to find school.");
@@ -33,7 +50,7 @@ export async function fetchSchool(id: string) {
 export async function fetchAdmins(schoolId: string) {
     try {
         const response =
-            await sql`SELECT * FROM admin JOIN member on admin.member_id = member.id WHERE admin.school_id = ${schoolId}`;
+            await sql`SELECT id, name, email FROM admin JOIN member on admin.member_id = member.id WHERE admin.school_id = ${schoolId}`;
         return response.rows;
     } catch (error) {
         console.error("Database Error:", error);
@@ -91,5 +108,16 @@ export async function fetchReport(id: string) {
     } catch (error) {
         console.error("Database Error:", error);
         throw new Error("Failed to fetch report.");
+    }
+}
+
+export async function isSpeaker(email: string) {
+    try {
+        const response =
+            await sql`SELECT is_speaker FROM member WHERE email = ${email}`;
+        return response.rows[0].is_speaker;
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch speaker status.");
     }
 }

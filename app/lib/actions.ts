@@ -53,7 +53,7 @@ export async function editSchool(id: string, admins: any, formData: FormData) {
         relation: formData.get("relation")?.toString(),
     };
 
-    await sql`UPDATE School SET name = ${schoolData.name}, address = ${schoolData.address}, contact_person = ${schoolData.contact_person}, email = ${schoolData.email}, phone = ${schoolData.phone}, relation = ${schoolData.relation} WHERE id = ${id}`;
+    await sql`UPDATE school SET name = ${schoolData.name}, address = ${schoolData.address}, contact_person = ${schoolData.contact_person}, email = ${schoolData.email}, phone = ${schoolData.phone}, relation = ${schoolData.relation} WHERE id = ${id}`;
 
     adminsArray.forEach(async (admin) => {
         await sql`INSERT INTO admin (school_id, member_id) VALUES (${id}, ${
@@ -156,6 +156,27 @@ export async function editReport(
 export async function deleteReport(id: string) {
     await sql`DELETE FROM report WHERE id = ${id}`;
     revalidatePath("/members");
+}
+
+export async function promoteUser(id: string) {
+    await sql`UPDATE member SET is_speaker = TRUE WHERE id = ${id}`;
+    revalidatePath("/members");
+}
+
+export async function demoteUser(id: string) {
+    await sql`UPDATE member SET is_speaker = FALSE WHERE id = ${id}`;
+    revalidatePath("/members");
+}
+
+export async function markEmailSent(schoolId: string) {
+    console.log("Marking as sent...");
+    await sql`UPDATE school SET email_sent = TRUE WHERE id = ${schoolId}`;
+    revalidatePath("/schools");
+}
+
+export async function markEmailUnsent(schoolId: string) {
+    await sql`UPDATE school SET email_sent = FALSE WHERE id = ${schoolId}`;
+    revalidatePath("/schools");
 }
 
 export async function authenticate(prevState: string | undefined) {

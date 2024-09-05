@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardBody, Tabs, Tab } from "@nextui-org/react";
+import { Card, CardBody, Tabs, Tab, Input } from "@nextui-org/react";
 
 export default function Page() {
     return (
@@ -9,41 +9,43 @@ export default function Page() {
             <Tabs aria-label="Dynamic tabs" variant="underlined">
                 <Tab title="Willkommen!">
                     <Card>
-                        <CardBody className="p-8">
-                            Schön, dass du neu bei Senkrechtstarter dabei bist!
-                            Dieses Merkblatt soll dir den Einstieg in der Gruppe
-                            hier in Aachen etwas erleichtern, selbstverständlich
-                            kannst du aber auch jeden aus der Gruppe mit Fragen
-                            löchern.
+                        <CardBody className="p-8 flex gap-4">
+                            <strong>Willkommen!</strong>
+                            <div>
+                                Schön, dass du neu bei Senkrechtstarter dabei
+                                bist! Dieses Merkblatt soll dir den Einstieg in
+                                der Gruppe hier in Aachen etwas erleichtern,
+                                selbstverständlich kannst du aber auch jeden aus
+                                der Gruppe mit Fragen löchern.
+                            </div>
                         </CardBody>
                     </Card>
                 </Tab>
                 <Tab title="Email">
                     <Card>
-                        <CardBody className="p-8">
+                        <CardBody className="flex p-8 gap-4">
+                            <strong>E-Mail</strong>
                             <div>
-                                Über die aachen@senkrechtstarter.orgorganisieren
-                                wir ALLES was mit Senkrechtstarter zutun hat.
-                                Dies sind unter anderem Schulbesuche, andere
-                                Veranstaltungen, Anfragen an andere Städte ob
-                                sie für uns Patenschaften übernehmen können und
-                                vieles mehr. Jeder aus der Senkrechtstarter
-                                Aachen Gruppe kennt das Passwort und kann so die
-                                Dinge organisieren für die er zuständig ist und
-                                gleichzeitig kann auf diese Art und Weise
-                                schnell kommuniziert werden, wenn es Neuerungen
-                                gibt. Auch kannst du so sehen, wenn sich
-                                schonmal jemand mit der gleichen Schule oder
-                                Angelegenheit befasst hat wie du. Du kannst dich
-                                über folgende Website und Zugangsdaten
-                                einloggen:
+                                Über die aachen@senkrechtstarter.org
+                                organisieren wir alles, was mit Senkrechtstarter
+                                zutun hat. Dies sind unter anderem Schulbesuche,
+                                andere Veranstaltungen, Anfragen an andere
+                                Städte ob sie für uns Patenschaften übernehmen
+                                können und vieles mehr. Jeder aus der
+                                Senkrechtstarter Aachen Gruppe kennt das
+                                Passwort und kann so die Dinge organisieren für
+                                die er zuständig ist und gleichzeitig kann auf
+                                diese Art und Weise schnell kommuniziert werden,
+                                wenn es Neuerungen gibt. Auch kannst du so
+                                sehen, wenn sich schonmal jemand mit der
+                                gleichen Schule oder Angelegenheit befasst hat
+                                wie du. Du kannst dich über folgende Website und
+                                Zugangsdaten einloggen:
                             </div>
                             <div>Website: https://webmail.all-inkl.com</div>
-                            <div>
-                                E-Mail: aachen@senkrechtstarter.orgPasswort:
-                                AC_WfgUN4
-                            </div>
-                            <b>Dropbox</b>
+                            <div>E-Mail: aachen@senkrechtstarter.org</div>
+                            <div>Passwort: AC_WfgUN4</div>
+                            <strong>Dropbox</strong>
                             <div>
                                 In der Dropbox findest du alle Materialien die
                                 in irgendeiner Form mit Senkrechtstarter zutun
@@ -52,15 +54,16 @@ export default function Page() {
                                 für dich ein leichtest dich zurechtzufinden
                                 JSuchst du also eine PowerPoint, den letzten
                                 Halbjahresbericht, Fotos oder Beispielemails
-                                bist du hier genau richtig. Benutzername:
-                                aachen@senkrechtstarter.orgPasswort: AC_WfgUN4
+                                bist du hier genau richtig.
                             </div>
+                            <div>Benutzername: aachen@senkrechtstarter.org</div>
+                            <div>Passwort: AC_WfgUN4</div>
                         </CardBody>
                     </Card>
                 </Tab>
                 <Tab title="Schulbesuche">
                     <Card>
-                        <CardBody className="p-8">
+                        <CardBody className="flex p-8 gap-4">
                             <div>
                                 Was wir bei Senkrechtstarter machen um unserem
                                 Ziel näher zu kommen möglichst vielen

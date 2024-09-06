@@ -61,8 +61,8 @@ export default function UserCard({ user }: { user: any }) {
                                     : promoteUser(user.id);
                             }}>
                             {user.is_speaker
-                                ? "Zum Sprecher Ernennen"
-                                : "Zum Mitglied Zurückstufen"}
+                                ? "Zum Mitglied Zurückstufen"
+                                : "Zum Sprecher Ernennen"}
                         </Menu.Item>
                         <Menu.Item
                             key="delete"

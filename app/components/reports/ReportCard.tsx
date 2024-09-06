@@ -1,11 +1,4 @@
-import {
-    Avatar,
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-    Chip,
-} from "@nextui-org/react";
+import { Avatar, Card, Chip, Group, Stack, Title } from "@mantine/core";
 import ReportCardDropdown from "../ReportCardDropdown";
 import { fetchParticipants } from "@/app/lib/data";
 
@@ -25,36 +18,34 @@ export default async function ReportCard({
 
     const participants = await fetchParticipants(report.id);
     return (
-        <Card className="p-4">
-            <CardHeader>
-                <div className="w-full flex flex-row justify-between">
-                    <h1 className="font-bold text-lg">{formattedDate}</h1>
+        <Card p="sm">
+            <Card.Section>
+                <Group justify="space-between">
+                    <Title order={4}>{formattedDate}</Title>
 
                     <ReportCardDropdown
                         reportId={report.id}
                         schoolId={schoolId}
                     />
-                </div>
-            </CardHeader>
-            <CardBody className="py-2">
-                <div className="flex flex-col justify-between gap-3">
-                    <p className="text-gray-500">{report.content}</p>
-                </div>
-            </CardBody>
-            <CardFooter className="flex flew-row justify-end gap-3">
-                <div className="flex gap-4">
+                </Group>
+            </Card.Section>
+            <Card.Section p="sm">
+                <Stack gap="sm" justify="space-between">
+                    <p>{report.content}</p>
+                </Stack>
+            </Card.Section>
+            <Card.Section>
+                <Group gap="sm">
                     {participants.map((participant: any) => (
                         <Chip
                             key={participant.id}
                             variant="flat"
-                            avatar={
-                                <Avatar name={participant.name.charAt(0)} />
-                            }>
+                            icon={<Avatar name={participant.name.charAt(0)} />}>
                             {participant.name}
                         </Chip>
                     ))}
-                </div>
-            </CardFooter>
+                </Group>
+            </Card.Section>
         </Card>
     );
 }

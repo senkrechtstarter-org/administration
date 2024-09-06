@@ -1,15 +1,10 @@
 "use client";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import {
-    Button,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
-} from "@nextui-org/react";
+
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { deleteReport } from "../lib/actions";
+import { ActionIcon, Button, Menu, Popover } from "@mantine/core";
 
 export default function ReportCardDropdown({
     reportId,
@@ -22,32 +17,30 @@ export default function ReportCardDropdown({
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <Dropdown showArrow>
-            <DropdownTrigger>
-                <Button isIconOnly variant="light">
-                    <EllipsisVerticalIcon className="w-6" />
-                </Button>
-            </DropdownTrigger>
-            <DropdownMenu
-                onAction={(key) => {
-                    if (key === "edit") {
+        <Menu withArrow>
+            <Menu.Target>
+                <ActionIcon variant="light">
+                    <EllipsisVerticalIcon />
+                </ActionIcon>
+            </Menu.Target>
+            <Menu.Dropdown>
+                <Menu.Item
+                    key="edit"
+                    onClick={() => {
                         router.push(
                             `/schools/${schoolId}/reports/${reportId}/edit`,
                         );
-                    }
-                }}
-                aria-label="Static Actions">
-                <DropdownItem key="edit">Edit</DropdownItem>
-
-                <DropdownItem
+                    }}>
+                    Edit
+                </Menu.Item>
+                <Menu.Item
                     key="delete"
-                    className="text-danger"
                     color="danger"
                     onClick={() => deleteReport(reportId)}>
                     Delete
                     {/* <DeleteSchoolButton id={school.id} /> */}
-                </DropdownItem>
-            </DropdownMenu>
-        </Dropdown>
+                </Menu.Item>
+            </Menu.Dropdown>
+        </Menu>
     );
 }

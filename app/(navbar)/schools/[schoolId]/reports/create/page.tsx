@@ -1,7 +1,6 @@
-import SchoolForm from "@/app/components/schools/school-form";
-import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import { fetchSchool, fetchUsers } from "@/app/lib/data";
 import ReportForm from "@/app/components/reports/ReportForm";
+import { Container } from "@mantine/core";
 
 export default async function Page({
     params,
@@ -11,7 +10,7 @@ export default async function Page({
     const school = await fetchSchool(params.schoolId);
     const users = await fetchUsers();
     return (
-        <div className="p-6">
+        <Container p={"md"}>
             {/* <Breadcrumbs underline="none" radius="full" variant="solid">
                 <BreadcrumbItem href="/schools">All Schools</BreadcrumbItem>
                 <BreadcrumbItem href="/schools/create">
@@ -19,6 +18,6 @@ export default async function Page({
                 </BreadcrumbItem>
             </Breadcrumbs> */}
             <ReportForm users={users} school={school} />
-        </div>
+        </Container>
     );
 }

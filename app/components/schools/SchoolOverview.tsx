@@ -1,37 +1,39 @@
 "use client";
 
+import Link from "next/link";
+import SchoolCardDropdown from "../SchoolCardDropdown";
 import {
     Accordion,
-    AccordionItem,
     Avatar,
     Button,
+    Center,
     Chip,
-    Link,
-} from "@nextui-org/react";
-import SchoolCardDropdown from "../SchoolCardDropdown";
+    Container,
+    Group,
+    Stack,
+    Text,
+    Title,
+} from "@mantine/core";
 
 export default function SchoolOverview({ schools }: { schools: any }) {
     return (
-        <div className="p-6 mt-2">
-            <div className="flex justify-between mb-2">
-                <h2 className={`mb-4 text-2xl`}>Schulenübersicht</h2>
+        <Container p="md" mt="lg">
+            <Group justify="space-between">
+                <Title order={2}>Schulübersicht</Title>
                 <Link href="/schools/create">
-                    <Button color="primary">Neue Schule Hinzufügen</Button>
+                    <Button>Neue Schule Hinzufügen</Button>
                 </Link>
-            </div>
+            </Group>
 
-            <div className="flex flex-wrap gap-4 mt-4">
-                {schools.length === 0 && (
-                    <div className="text-gray-500">Keine Schule gefunden!</div>
-                )}
-                <Accordion selectionMode="multiple" variant="shadow">
+            <Stack gap="md" mt="md">
+                {schools.length === 0 && <Text>Keine Schule gefunden!</Text>}
+                <Accordion chevronPosition="left">
                     {schools.map((school: any) => (
-                        <AccordionItem
-                            key={school.id}
-                            title={
-                                <div className="flex justify-between">
-                                    <div className="flex gap-4">
-                                        <div>{school.name}</div>
+                        <Accordion.Item key={school.id} value={school.id}>
+                            <Center>
+                                <Accordion.Control>
+                                    <Group gap="md">
+                                        <Text>{school.name}</Text>
                                         <Chip
                                             color={
                                                 school.email_sent
@@ -42,47 +44,33 @@ export default function SchoolOverview({ schools }: { schools: any }) {
                                                 ? "Versendet"
                                                 : "Unversendet"}
                                         </Chip>
-                                    </div>
-
-                                    <div>
-                                        {school.admins.map((admin: any) => (
-                                            <Chip
-                                                key={admin.id}
-                                                variant="flat"
-                                                avatar={
-                                                    <Avatar
-                                                        name={admin.name[0]}
-                                                    />
-                                                }>
-                                                {admin.name}
-                                            </Chip>
-                                        ))}
-                                    </div>
-                                </div>
-                            }
-                            startContent={
+                                    </Group>
+                                </Accordion.Control>
                                 <SchoolCardDropdown school={school} />
-                            }>
-                            <div className="flex flex-col justify-between gap-3 p-4">
-                                <div>E-Mail: {school.email}</div>
-                                <div>Addresse: {school.address}</div>
-                                <div>
-                                    Kontaktperson: {school.contact_person}
-                                </div>
-                                <div>Telefon: {school.phone}</div>
-                                <div>
-                                    Verhältnis:{" "}
-                                    {school.relation == "MIDDLE"
-                                        ? "Mittel"
-                                        : school.relation == "BAD"
-                                        ? "Schlecht"
-                                        : "Gut"}
-                                </div>
-                            </div>
-                        </AccordionItem>
+                            </Center>
+
+                            <Accordion.Panel>
+                                <Stack gap="sm" justify="space-between" p="lg">
+                                    <div>E-Mail: {school.email}</div>
+                                    <div>Addresse: {school.address}</div>
+                                    <div>
+                                        Kontaktperson: {school.contact_person}
+                                    </div>
+                                    <div>Telefon: {school.phone}</div>
+                                    <div>
+                                        Verhältnis:{" "}
+                                        {school.relation == "MIDDLE"
+                                            ? "Mittel"
+                                            : school.relation == "BAD"
+                                            ? "Schlecht"
+                                            : "Gut"}
+                                    </div>
+                                </Stack>
+                            </Accordion.Panel>
+                        </Accordion.Item>
                     ))}
                 </Accordion>
-            </div>
-        </div>
+            </Stack>
+        </Container>
     );
 }

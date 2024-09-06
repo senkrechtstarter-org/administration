@@ -10,6 +10,16 @@ export async function fetchUsers() {
     }
 }
 
+export async function fetchProtocols() {
+    try {
+        const response = await sql`SELECT * FROM protocol`;
+        return response.rows;
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch users.");
+    }
+}
+
 export async function fetchSchools() {
     const schools: any[] = [];
     try {

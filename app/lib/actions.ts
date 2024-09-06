@@ -152,6 +152,27 @@ export async function editReport(
     revalidatePath(`/schools/${schoolId}/reports`);
     redirect(`/schools/${schoolId}/reports`);
 }
+export async function createProtocol(
+    participantsData: any,
+    formData: FormData,
+) {
+    const reportData = {
+        date: new Date(formData.get("date") as string).toDateString(),
+        content: formData.get("content")?.toString(),
+    };
+
+    const participants = Array.from(participantsData).map((id) => ({ id }));
+
+    const response =
+        await sql`INSERT INTO protocol (date, content) VALUES (${reportData.date}, ${reportData.content}) RETURNING id`;
+
+    participants.forEach(async (participant: any) => {
+        await sql`INSERT INTO protocol_participant (protocol_id, member_id) VALUES (${response.rows[0].id}, ${participant.id})`;
+    });
+
+    revalidatePath(`/protocols`);
+    redirect(`/protocols`);
+}
 
 export async function deleteReport(id: string) {
     await sql`DELETE FROM report WHERE id = ${id}`;

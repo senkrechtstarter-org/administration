@@ -1,28 +1,25 @@
 import Link from "next/link";
 import { fetchUsers } from "../../lib/data";
-import { Button } from "@nextui-org/react";
+import { Button, Container, Group, Stack, Text, Title } from "@mantine/core";
 import UserCard from "@/app/components/members/UserCard";
 
 export default async function Page() {
     const users = await fetchUsers();
 
     return (
-        <div className="p-6">
-            <div className="flex justify-between">
-                <h2 className={`mb-4 mt-1 text-2xl`}>Mitgliederübersicht</h2>
+        <Container p="md" mt="lg">
+            <Group justify="space-between">
+                <Title order={2}>Mitgliederübersicht</Title>
                 <Link href="/members/create">
-                    <Button color="primary">Neues Mitglied Hinzufügen</Button>
+                    <Button>Neues Mitglied Hinzufügen</Button>
                 </Link>
-            </div>
-
-            <div className="flex flex-col gap-4">
-                {users.length === 0 && (
-                    <div className="text-gray-500">No users found</div>
-                )}
+            </Group>
+            <Stack gap="md" mt="md">
+                {users.length === 0 && <Text>No users found</Text>}
                 {users.sort().map((user) => (
                     <UserCard key={user.id} user={user} />
                 ))}
-            </div>
-        </div>
+            </Stack>
+        </Container>
     );
 }

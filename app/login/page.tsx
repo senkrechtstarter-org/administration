@@ -2,18 +2,20 @@
 
 import SenkrechtstarterLogo from "@/app/components/senkrechtstarter-logo";
 import LoginForm from "@/app/components/login-form";
-import { Card, CardHeader, CardFooter, Divider } from "@nextui-org/react";
+import { Card } from "@mantine/core";
 export default function LoginPage() {
     return (
-        <div className="flex items-center max-w-140 m-auto mt-auto justify-center h-[100vh] bg-black">
-            <Card className="bg-gradient-to-l from-cyan-400 to-blue-500">
-                <CardHeader className="h-20 items-end rounded-lg p-5">
+        // <div className="flex items-center max-w-140 m-auto mt-auto justify-center h-[100vh] bg-black">
+        <div>
+            {/* <Card className="bg-gradient-to-l from-cyan-400 to-blue-500"> */}
+            <Card>
+                <Card.Section>
                     <SenkrechtstarterLogo />
-                </CardHeader>
+                </Card.Section>
                 {/* <Divider /> */}
-                <CardFooter className="justify-end items-center">
+                <Card.Section>
                     <LoginForm />
-                </CardFooter>
+                </Card.Section>
             </Card>
         </div>
     );

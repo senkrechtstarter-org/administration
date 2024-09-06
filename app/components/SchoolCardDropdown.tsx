@@ -1,38 +1,38 @@
 "use client";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import {
-    Button,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
-} from "@nextui-org/react";
+
 import { useRouter } from "next/navigation";
 import { deleteSchool, markEmailSent, markEmailUnsent } from "../lib/actions";
 import { useSession } from "next-auth/react";
+import { ActionIcon, Menu } from "@mantine/core";
 
 export default function SchoolCardDropdown({ school }: { school: any }) {
     const router = useRouter();
     const { data: session, status } = useSession();
     console.log("school: ", school);
     return (
-        <Dropdown showArrow>
-            <DropdownTrigger>
-                <EllipsisVerticalIcon className="w-6" />
-            </DropdownTrigger>
-            <DropdownMenu
-                onAction={(key) => {
-                    if (key === "reports") {
+        <Menu withArrow>
+            <Menu.Target>
+                <ActionIcon variant="transparent">
+                    <EllipsisVerticalIcon />
+                </ActionIcon>
+            </Menu.Target>
+            <Menu.Dropdown>
+                <Menu.Item
+                    key="reports"
+                    onClick={() => {
                         router.push(`/schools/${school.id}/reports`);
-                    } else if (key === "edit") {
+                    }}>
+                    Berichte Ansehen
+                </Menu.Item>
+                <Menu.Item
+                    key="edit"
+                    onClick={() => {
                         router.push(`/schools/${school.id}/edit`);
-                    }
-                }}
-                aria-label="Static Actions"
-                disabledKeys={session?.user?.isSpeaker ? [] : ["delete"]}>
-                <DropdownItem key="reports">Berichte Ansehen</DropdownItem>
-                <DropdownItem key="edit">Bearbeiten</DropdownItem>
-                <DropdownItem
+                    }}>
+                    Bearbeiten
+                </Menu.Item>
+                <Menu.Item
                     key="email-sent"
                     onClick={() => {
                         school.email_sent
@@ -42,15 +42,16 @@ export default function SchoolCardDropdown({ school }: { school: any }) {
                     {school.email_sent
                         ? "Als unversendet Markieren"
                         : "Als versendet Markieren"}
-                </DropdownItem>
-                <DropdownItem
+                </Menu.Item>
+                <Menu.Item
+                    disabled={!session?.user?.isSpeaker}
                     key="delete"
                     className="text-danger"
-                    color="danger"
+                    color="red"
                     onClick={() => deleteSchool(school.id)}>
                     Löschen
-                </DropdownItem>
-            </DropdownMenu>
-        </Dropdown>
+                </Menu.Item>
+            </Menu.Dropdown>
+        </Menu>
     );
 }

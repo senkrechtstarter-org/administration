@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 
-import { createReport, editReport } from "@/app/lib/actions";
+import {
+    createProtocol,
+    createReport,
+    editProtocol,
+    editReport,
+} from "@/app/lib/actions";
 import { useState } from "react";
 import {
     Button,
@@ -25,22 +30,20 @@ import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
 import Placeholder from "@tiptap/extension-placeholder";
 
-export default function ReportForm({
+export default function ProtocolForm({
     users,
-    school,
-    report,
+    protocol,
     participants: participantsData,
 }: {
     users: any[];
-    school: any;
-    report?: any;
+    protocol?: any;
     participants?: any[];
 }) {
     const [participants, setParticipants] = useState(
         participantsData?.map((participant: any) => participant.name) || [],
     );
 
-    const [date, setDate] = useState(report?.date || new Date());
+    const [date, setDate] = useState(protocol?.date || new Date());
 
     const editor = useEditor({
         extensions: [
@@ -59,16 +62,16 @@ export default function ReportForm({
         <form
             action={() => {
                 const content = editor?.getHTML();
-                !!report
-                    ? editReport.bind(null, report.id, school.id, participants)
-                    : createReport.bind(null, school.id, participants);
+                !!protocol
+                    ? editProtocol.bind(null, protocol.id, participants)
+                    : createProtocol.bind(null, participants);
             }}>
             <Container p="xl">
                 <Stack gap="md">
                     <Title order={3}>
-                        {!!report
-                            ? `Bearbeite deinen Bericht für ${school.name}`
-                            : `Erstelle einen neuen Bericht für ${school.name}`}
+                        {!!protocol
+                            ? `Bearbeite dein Protokoll`
+                            : `Erstelle ein neues Protokoll`}
                     </Title>
                     <DatePickerInput
                         label="Datum"
@@ -83,7 +86,7 @@ export default function ReportForm({
                         onChange={setParticipants}
                         placeholder="Konrad Adenauer"
                     />
-                    <Text size="sm">Bericht</Text>
+                    <Text size="sm">Protokoll</Text>
                     {/* Rich Text Editor */}
                     <RichTextEditor editor={editor}>
                         <RichTextEditor.Toolbar sticky stickyOffset={60}>
@@ -134,11 +137,11 @@ export default function ReportForm({
                         <RichTextEditor.Content />
                     </RichTextEditor>
                     <Group justify="end">
-                        <Link href={`/schools/${school.id}/reports`}>
+                        <Link href={`/protocols`}>
                             <Button variant="subtle">Abbrechen</Button>
                         </Link>
                         <Button type="submit">
-                            {!!report ? "Speichern" : "Erstellen"}
+                            {!!protocol ? "Speichern" : "Erstellen"}
                         </Button>
                     </Group>
                 </Stack>

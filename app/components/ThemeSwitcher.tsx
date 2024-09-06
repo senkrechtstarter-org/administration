@@ -1,15 +1,14 @@
 // app/components/ThemeSwitcher.tsx
 "use client";
 
-import { useTheme } from "next-themes";
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
-import { Button } from "@nextui-org/react";
+import { ActionIcon, Button, useMantineColorScheme } from "@mantine/core";
 
 export function ThemeSwitcher() {
     const [mounted, setMounted] = useState(false);
-    const { theme, setTheme } = useTheme();
+    const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
     useEffect(() => {
         setMounted(true);
@@ -17,15 +16,12 @@ export function ThemeSwitcher() {
 
     if (!mounted) return null;
     return (
-        <Button
-            isIconOnly
-            variant="light"
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-            {theme === "light" ? (
-                <MoonIcon className="w-5" />
-            ) : (
-                <SunIcon className="w-5" />
-            )}
-        </Button>
+        <ActionIcon
+            variant="subtle"
+            onClick={() => {
+                toggleColorScheme();
+            }}>
+            {colorScheme === "dark" ? <SunIcon /> : <MoonIcon />}
+        </ActionIcon>
     );
 }

@@ -1,6 +1,6 @@
 import { fetchUsers, fetchSchool, fetchAdmins } from "@/app/lib/data";
-import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
-import SchoolForm from "@/app/components/schools/school-form";
+import SchoolForm from "@/app/components/schools/SchoolForm";
+import { Container } from "@mantine/core";
 
 export default async function Page({
     params,
@@ -15,14 +15,14 @@ export default async function Page({
     ]);
 
     return (
-        <div className="p-6">
-            <Breadcrumbs underline="none" radius="full" variant="solid">
+        <Container p={"md"}>
+            {/* <Breadcrumbs underline="none" radius="full" variant="solid">
                 <BreadcrumbItem href="/schools">All Schools</BreadcrumbItem>
                 <BreadcrumbItem href={`/schools/${schoolId}/edit`}>
                     Edit {school?.name}
                 </BreadcrumbItem>
-            </Breadcrumbs>
+            </Breadcrumbs> */}
             <SchoolForm users={users} school={school} admins={admins} />
-        </div>
+        </Container>
     );
 }

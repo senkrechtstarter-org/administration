@@ -1,6 +1,7 @@
 import React from "react";
 import { fetchReports, fetchSchool } from "@/app/lib/data";
-import { Button, Link } from "@nextui-org/react";
+import { Button, Container, Group, Stack, Text, Title } from "@mantine/core";
+import Link from "next/link";
 import ReportCard from "@/app/components/reports/ReportCard";
 
 export default async function Page({
@@ -13,18 +14,16 @@ export default async function Page({
     const reports = await fetchReports(schoolId);
 
     return (
-        <div className="p-6">
-            <div className="flex justify-between items-center mb-6">
-                <h2 className={`text-2xl`}>Berichte für {school?.name}</h2>
+        <Container p="md" mt="lg">
+            <Group justify={"space-between"} align={"center"}>
+                <Title order={2}>Berichte für {school?.name}</Title>
                 <Link href={`/schools/${schoolId}/reports/create`}>
-                    <Button color="primary">Neuen Bericht Hinzufügen</Button>
+                    <Button>Neuen Bericht Hinzufügen</Button>
                 </Link>
-            </div>
+            </Group>
 
-            <div className="flex flex-col justify-between gap-4">
-                {reports.length === 0 && (
-                    <div className="text-gray-500">No reports found</div>
-                )}
+            <Stack justify="space-between" gap={"md"} mt="md">
+                {reports.length === 0 && <Text>Keine Berichte vorhanden!</Text>}
                 {reports.map((report) => (
                     <ReportCard
                         key={report.id}
@@ -32,7 +31,7 @@ export default async function Page({
                         schoolId={schoolId}
                     />
                 ))}
-            </div>
-        </div>
+            </Stack>
+        </Container>
     );
 }

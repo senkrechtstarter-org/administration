@@ -1,30 +1,70 @@
 "use client";
 
-import { Card, CardBody, Tabs, Tab, Input } from "@nextui-org/react";
-
+import {
+    Card,
+    Tabs,
+    Input,
+    Center,
+    Title,
+    Stack,
+    Text,
+    rem,
+} from "@mantine/core";
+import {
+    HomeIcon,
+    InboxArrowDownIcon,
+    AcademicCapIcon,
+} from "@heroicons/react/24/outline";
 export default function Page() {
+    const iconStyle = { width: rem(16), height: rem(16) };
+
     return (
-        <div className="p-6">
-            <h2 className={"mt-2 text-2xl"}>How to Senkrechtstarter</h2>
-            <Tabs aria-label="Dynamic tabs" variant="underlined">
-                <Tab title="Willkommen!">
-                    <Card>
-                        <CardBody className="p-8 flex gap-4">
-                            <strong>Willkommen!</strong>
-                            <div>
+        <Stack p={"xl"}>
+            <Title order={3}>How to Senkrechtstarter</Title>
+            <Tabs defaultValue="home">
+                <Tabs.List>
+                    <Tabs.Tab
+                        value="home"
+                        leftSection={<HomeIcon style={iconStyle} />}>
+                        Willkommen!
+                    </Tabs.Tab>
+                    <Tabs.Tab
+                        value="email"
+                        leftSection={<InboxArrowDownIcon style={iconStyle} />}>
+                        Email
+                    </Tabs.Tab>
+                    <Tabs.Tab
+                        value="schulbesuche"
+                        leftSection={<AcademicCapIcon style={iconStyle} />}>
+                        Schulbesuche
+                    </Tabs.Tab>
+                </Tabs.List>
+
+                <Tabs.Panel value="home">
+                    <Card p="xl">
+                        <Stack gap="mid">
+                            <Text fw={700}>
+                                Willkommen zu Senkrechtstarter!
+                            </Text>
+                            <Text>
                                 Schön, dass du neu bei Senkrechtstarter dabei
                                 bist! Dieses Merkblatt soll dir den Einstieg in
                                 der Gruppe hier in Aachen etwas erleichtern,
                                 selbstverständlich kannst du aber auch jeden aus
                                 der Gruppe mit Fragen löchern.
-                            </div>
-                        </CardBody>
+                            </Text>
+                        </Stack>
                     </Card>
-                </Tab>
-                <Tab title="Email">
-                    <Card>
-                        <CardBody className="flex p-8 gap-4">
-                            <strong>E-Mail</strong>
+                </Tabs.Panel>
+                <Tabs.Panel value="email">
+                    <Card p="xl">
+                        <Stack>
+                            <Text fw={700}>E-Mail</Text>
+                            <Text>
+                                In der Senkrechtstarter Aachen Gruppe
+                                kommunizieren wir hauptsächlich über zwei
+                                Kanäle: E-Mail und Dropbox.
+                            </Text>
                             <div>
                                 Über die aachen@senkrechtstarter.org
                                 organisieren wir alles, was mit Senkrechtstarter
@@ -58,12 +98,12 @@ export default function Page() {
                             </div>
                             <div>Benutzername: aachen@senkrechtstarter.org</div>
                             <div>Passwort: AC_WfgUN4</div>
-                        </CardBody>
+                        </Stack>
                     </Card>
-                </Tab>
-                <Tab title="Schulbesuche">
-                    <Card>
-                        <CardBody className="flex p-8 gap-4">
+                </Tabs.Panel>
+                <Tabs.Panel value="schulbesuche">
+                    <Card p="xl">
+                        <Stack>
                             <div>
                                 Was wir bei Senkrechtstarter machen um unserem
                                 Ziel näher zu kommen möglichst vielen
@@ -107,10 +147,10 @@ export default function Page() {
                                 genauer erklärt ist. Auch hier wird sich in
                                 Zukunft wahrscheinlich etwas ändern.
                             </div>
-                        </CardBody>
+                        </Stack>
                     </Card>
-                </Tab>
+                </Tabs.Panel>
             </Tabs>
-        </div>
+        </Stack>
     );
 }

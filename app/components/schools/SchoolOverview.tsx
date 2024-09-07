@@ -55,7 +55,7 @@ export default function SchoolOverview({ schools }: { schools: any }) {
                                             }>
                                             {school.email_sent
                                                 ? "Email: Versendet"
-                                                : "Email: Unversendet"}
+                                                : "Email: Nicht versendet"}
                                         </Badge>
                                     </Group>
                                 </Accordion.Control>

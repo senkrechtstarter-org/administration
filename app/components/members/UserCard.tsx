@@ -1,9 +1,5 @@
 "use client";
 
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { useRouter } from "next/navigation";
-import { deleteUser, promoteUser, demoteUser } from "@/app/lib/actions";
-import { useSession } from "next-auth/react";
 import {
     ActionIcon,
     Badge,
@@ -16,14 +12,11 @@ import {
     Text,
     Title,
 } from "@mantine/core";
+import MemberDropdown from "./MemberDropdown";
 
 export default function UserCard({ user }: { user: any }) {
-    const router = useRouter();
-    const { data: session } = useSession();
-    console.log("User session: ", session);
-    console.log("User data: ", user);
     return (
-        <Card p="md" withBorder shadow="xs" radius="md">
+        <Card p="md" withBorder shadow="sm" radius="md">
             <Group justify="space-between" gap="md">
                 <Stack align="start" justify="center" gap="sm">
                     <Group>
@@ -37,42 +30,7 @@ export default function UserCard({ user }: { user: any }) {
                     <Text>{user.email}</Text>
                 </Stack>
 
-                <Menu withArrow>
-                    <Menu.Target>
-                        <ActionIcon variant="subtle">
-                            <EllipsisVerticalIcon />
-                        </ActionIcon>
-                    </Menu.Target>
-                    <Menu.Dropdown>
-                        <Menu.Item
-                            key="edit"
-                            onClick={() =>
-                                router.push(`/members/${user.id}/edit`)
-                            }>
-                            Bearbeiten
-                        </Menu.Item>
-                        <Menu.Item
-                            key="switch"
-                            disabled={!session?.user?.isSpeaker}
-                            color="warning"
-                            onClick={() => {
-                                user.is_speaker
-                                    ? demoteUser(user.id)
-                                    : promoteUser(user.id);
-                            }}>
-                            {user.is_speaker
-                                ? "Zum Mitglied Zurückstufen"
-                                : "Zum Sprecher Ernennen"}
-                        </Menu.Item>
-                        <Menu.Item
-                            key="delete"
-                            disabled={!session?.user?.isSpeaker}
-                            color="red"
-                            onClick={() => deleteUser(user.id)}>
-                            Löschen
-                        </Menu.Item>
-                    </Menu.Dropdown>
-                </Menu>
+                <MemberDropdown user={user} />
             </Group>
         </Card>
     );

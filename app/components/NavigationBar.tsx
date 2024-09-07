@@ -29,14 +29,14 @@ export default function NavigationBar() {
                         <UnstyledButton>Mitglieder</UnstyledButton>
                     </Link>
                     <Link
-                        href="/materials"
-                        style={{ textDecoration: "none", color: "inherit" }}>
-                        <UnstyledButton>Materialien</UnstyledButton>
-                    </Link>
-                    <Link
                         href="/protocols"
                         style={{ textDecoration: "none", color: "inherit" }}>
                         <UnstyledButton>Protokolle</UnstyledButton>
+                    </Link>
+                    <Link
+                        href="/materials"
+                        style={{ textDecoration: "none", color: "inherit" }}>
+                        <UnstyledButton>Materialien</UnstyledButton>
                     </Link>
                 </Group>
             </Group>

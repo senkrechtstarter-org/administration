@@ -27,7 +27,6 @@ const authOptions: NextAuthOptions = {
             }
         },
         async jwt({ token, user }) {
-            // console.log("Jwt token: ", token);
             return { ...token, ...user };
         },
         async session({ session, token, user }) {
@@ -39,7 +38,6 @@ const authOptions: NextAuthOptions = {
 
             session.user.isSpeaker = speaker;
 
-            // console.log("Session in middlware: ", session);
             return session;
         },
     },

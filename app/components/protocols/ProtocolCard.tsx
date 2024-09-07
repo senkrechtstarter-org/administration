@@ -1,6 +1,6 @@
 import { Avatar, Badge, Card, Chip, Group, Stack, Title } from "@mantine/core";
 // import protocolCardDropdown from "../protocolCardDropdown";
-import { fetchParticipants } from "@/app/lib/data";
+import { fetchParticipants, fetchProtocolParticipants } from "@/app/lib/data";
 import ProtocolCardDropdown from "./ProtocolCardDropdown";
 
 export default async function ProtocolCard({ protocol }: { protocol: any }) {
@@ -11,11 +11,10 @@ export default async function ProtocolCard({ protocol }: { protocol: any }) {
 
     const formattedDate = `${day}/${month}/${year}`;
 
-    const participants = await fetchParticipants(protocol.id);
+    const participants = await fetchProtocolParticipants(protocol.id);
 
-    console.log("Participants: ", participants);
     return (
-        <Card p="lg">
+        <Card p="lg" shadow="sm" withBorder radius="md">
             <Group justify="space-between">
                 <Title order={4}>{formattedDate}</Title>
 

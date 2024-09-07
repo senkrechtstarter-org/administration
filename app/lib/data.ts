@@ -37,15 +37,11 @@ export async function fetchSchools() {
         const schoolIds = (await sql`SELECT id FROM school`).rows.map(
             (x) => x.id,
         );
-        console.log("school ids: ", schoolIds);
 
         for (const schoolId of schoolIds) {
             const school = await fetchSchool(schoolId);
-            console.log("School in fetchschools: ", school);
             schools.push(school);
         }
-
-        console.log("Resulting schools: ", schools);
 
         return schools;
     } catch (error) {
@@ -60,7 +56,6 @@ export async function fetchSchool(schoolId: string) {
             .rows[0];
         const admins = await fetchAdmins(schoolId);
         school.admins = admins;
-        console.log("School after adding admins: ", school);
         return school;
     } catch (error) {
         console.error("Database Error:", error);
@@ -90,6 +85,18 @@ export async function fetchParticipants(reportId: string) {
     }
 }
 
+export async function fetchProtocolParticipants(protocolId: string) {
+    try {
+        const response =
+            await sql`SELECT * FROM protocol_participant JOIN member on protocol_participant.member_id = member.id WHERE protocol_id = ${protocolId}`;
+
+        return response.rows;
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch participants.");
+    }
+}
+
 export async function fetchUser(id: string) {
     try {
         const response = await sql`SELECT * FROM member WHERE id = ${id}`;
@@ -103,7 +110,6 @@ export async function fetchUser(id: string) {
 export async function fetchUserByEmail(email: string) {
     try {
         const data = await sql`SELECT * FROM member WHERE email = ${email}`;
-        console.log("data: ", data);
         return data.rows[0];
     } catch (error) {
         console.error("Database Error:", error);

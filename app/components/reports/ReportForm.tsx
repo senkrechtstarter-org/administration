@@ -40,8 +40,6 @@ export default function ReportForm({
         participantsData?.map((participant) => participant.name) || [],
     );
 
-    console.log("participant states: ", participants);
-
     const [date, setDate] = useState(report?.date || new Date());
 
     const editor = useEditor({
@@ -68,10 +66,6 @@ export default function ReportForm({
                     users
                         ?.filter((user) => participants.includes(user.name))
                         .map((user) => user.id) || [];
-
-                console.log("Content: ", content);
-                console.log("Participant IDS: ", participantIds);
-                console.log("Date: ", date);
 
                 if (!!report) {
                     editReport(

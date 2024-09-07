@@ -32,17 +32,24 @@ export default function SchoolForm({
     school?: any;
     admins?: any;
 }) {
-    const [admins, setAdmins] = useState<any>([]);
+    const [admins, setAdmins] = useState<any>(
+        adminsData?.map((admin: any) => admin.name) || [],
+    );
 
     const iconStyle = { width: rem(16), height: rem(16) };
 
     return (
         <form
-            action={(formData) =>
-                !!school
-                    ? editSchool(school.id, admins, formData)
-                    : createSchool(admins, formData)
-            }>
+            action={(formData) => {
+                const adminIds = users
+                    .filter((user: any) => admins.includes(user.name))
+                    .map((user: any) => user.id);
+                if (!!school) {
+                    editSchool(school.id, adminIds, formData);
+                } else {
+                    createSchool(adminIds, formData);
+                }
+            }}>
             <Container p="xl">
                 <Stack gap="md">
                     <Title order={3}>

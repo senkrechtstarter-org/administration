@@ -2,11 +2,7 @@
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 
 import { useRouter } from "next/navigation";
-import {
-    deleteSchool,
-    markEmailSent,
-    markEmailUnsent,
-} from "../../lib/actions";
+import { deleteSchool, toggleEmailSent } from "../../lib/actions";
 import { useSession } from "next-auth/react";
 import { ActionIcon, Menu } from "@mantine/core";
 
@@ -15,7 +11,7 @@ export default function SchoolCardDropdown({ school }: { school: any }) {
     const { data: session, status } = useSession();
     console.log("school: ", school);
     return (
-        <Menu withArrow>
+        <Menu withArrow position="right-start" offset={15}>
             <Menu.Target>
                 <ActionIcon variant="transparent" m="xs">
                     <EllipsisVerticalIcon />
@@ -39,9 +35,7 @@ export default function SchoolCardDropdown({ school }: { school: any }) {
                 <Menu.Item
                     key="email-sent"
                     onClick={() => {
-                        school.email_sent
-                            ? markEmailSent(school.id)
-                            : markEmailUnsent(school.id);
+                        toggleEmailSent(school.id);
                     }}>
                     {school.email_sent
                         ? "Als unversendet Markieren"

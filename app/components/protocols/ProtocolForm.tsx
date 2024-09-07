@@ -43,8 +43,6 @@ export default function ProtocolForm({
         participantsData?.map((participant) => participant.name) || [],
     );
 
-    console.log("participant states: ", participants);
-
     const [date, setDate] = useState(protocol?.date || new Date());
 
     const editor = useEditor({
@@ -71,10 +69,6 @@ export default function ProtocolForm({
                     users
                         ?.filter((user) => participants.includes(user.name))
                         .map((user) => user.id) || [];
-
-                console.log("Content: ", content);
-                console.log("Participant IDS: ", participantIds);
-                console.log("Date: ", date);
 
                 if (!!protocol) {
                     editProtocol(protocol.id, participantIds, date, content);

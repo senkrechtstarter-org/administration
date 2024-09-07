@@ -18,9 +18,8 @@ export default async function ReportCard({
 
     const participants = await fetchParticipants(report.id);
 
-    console.log("Participants: ", participants);
     return (
-        <Card p="lg">
+        <Card p="lg" shadow="sm" radius="md" withBorder>
             <Group justify="space-between">
                 <Title order={4}>{formattedDate}</Title>
 

@@ -21,9 +21,15 @@ export default async function ProtocolOverview() {
                 {protocols.length === 0 && (
                     <Text>Keine Protokolle vorhanden!</Text>
                 )}
-                {protocols.map((protocol) => (
-                    <ProtocolCard key={protocol.id} protocol={protocol} />
-                ))}
+                {protocols
+                    .sort(
+                        (a, b) =>
+                            new Date(b.date).getTime() -
+                            new Date(a.date).getTime(),
+                    )
+                    .map((protocol) => (
+                        <ProtocolCard key={protocol.id} protocol={protocol} />
+                    ))}
             </Stack>
         </Container>
     );

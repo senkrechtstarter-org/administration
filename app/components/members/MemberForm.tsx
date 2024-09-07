@@ -27,8 +27,7 @@ export default function MemberForm({ member }: { member?: any }) {
                 <Stack gap="md" mt="md">
                     <TextInput
                         label="Name"
-                        // labelPlacement="inside"
-                        aria-required
+                        required
                         id="name"
                         name="name"
                         type="string"
@@ -40,8 +39,7 @@ export default function MemberForm({ member }: { member?: any }) {
 
                     <TextInput
                         label="E-Mail"
-                        // labelPlacement="inside"
-                        aria-required
+                        required
                         id="email"
                         name="email"
                         type="string"

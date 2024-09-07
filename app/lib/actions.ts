@@ -20,9 +20,7 @@ const SchoolSchema = z.object({
 
 const CreateSchool = SchoolSchema.omit({ id: true, last_visit: true });
 
-export async function createSchool(admins: Set<any>, formData: FormData) {
-    const adminsArray = Array.from(admins).map((id) => ({ id }));
-
+export async function createSchool(adminIds: string[], formData: FormData) {
     const schoolData = {
         name: formData.get("name")?.toString(),
         address: formData.get("address")?.toString(),
@@ -34,16 +32,18 @@ export async function createSchool(admins: Set<any>, formData: FormData) {
 
     await sql`INSERT INTO school (name, address, contact_person, email, phone, relation) VALUES (${schoolData.name}, ${schoolData.address}, ${schoolData.contact_person}, ${schoolData.email}, ${schoolData.phone}, ${schoolData.relation})`;
 
-    adminsArray.forEach(async (admin) => {
-        await sql`INSERT INTO admin (school_id, member_id) VALUES ((SELECT id FROM school WHERE name = ${schoolData.name}), ${admin.id})`;
-    });
+    for (const adminId of adminIds) {
+        await sql`INSERT INTO admin (school_id, member_id) VALUES ((SELECT id FROM school WHERE name = ${schoolData.name}), ${adminId})`;
+    }
     revalidatePath("/schools");
     redirect("/schools");
 }
 
-export async function editSchool(id: string, admins: any, formData: FormData) {
-    const adminsArray = Array.from(admins).map((id) => ({ id }));
-
+export async function editSchool(
+    id: string,
+    adminIds: string[],
+    formData: FormData,
+) {
     const schoolData = {
         name: formData.get("name")?.toString(),
         address: formData.get("address")?.toString(),
@@ -55,11 +55,11 @@ export async function editSchool(id: string, admins: any, formData: FormData) {
 
     await sql`UPDATE school SET name = ${schoolData.name}, address = ${schoolData.address}, contact_person = ${schoolData.contact_person}, email = ${schoolData.email}, phone = ${schoolData.phone}, relation = ${schoolData.relation} WHERE id = ${id}`;
 
-    adminsArray.forEach(async (admin) => {
-        await sql`INSERT INTO admin (school_id, member_id) VALUES (${id}, ${
-            admin.id as string
-        })`;
-    });
+    await sql`DELETE FROM admin WHERE school_id = ${id}`;
+
+    for (const adminId of adminIds) {
+        await sql`INSERT INTO admin (school_id, member_id) VALUES (${id}, ${adminId})`;
+    }
 
     revalidatePath("/schools");
     redirect("/schools");
@@ -114,7 +114,7 @@ export async function createReport(
     content: string,
 ) {
     const response =
-        await sql`INSERT INTO report (school_id, date, content) VALUES (${schoolId}, ${date.toDateString()}, ${content}) RETURNING id`;
+        await sql`INSERT INTO report (school_id, date, content) VALUES (${schoolId}, ${date.toISOString()}, ${content}) RETURNING id`;
 
     for (const participantId of participantIds) {
         await sql`INSERT INTO participant (report_id, member_id) VALUES (${response.rows[0].id}, ${participantId})`;
@@ -131,10 +131,9 @@ export async function editReport(
     date: Date,
     content: string,
 ) {
-    console.log("Date string: ", date.toDateString());
-    console.log("content: ", content);
-    console.log("participants: ", participantIds);
-    await sql`UPDATE report SET date = ${date.toDateString()}, content = ${content} WHERE id = ${id}`;
+    await sql`UPDATE report SET date = ${date.toISOString()}, content = ${content} WHERE id = ${id}`;
+
+    await sql`DELETE FROM participant WHERE report_id = ${id}`;
 
     for (const participantId of participantIds) {
         await sql`INSERT INTO participant (report_id, member_id) VALUES (${id}, ${participantId})`;
@@ -144,20 +143,16 @@ export async function editReport(
     redirect(`/schools/${schoolId}/reports`);
 }
 export async function createProtocol(
-    participantsData: any,
+    participantIds: string[],
     date: Date,
     content: string,
 ) {
-    const participants = Array.from(participantsData).map((id) => ({ id }));
-
-    console.log("Date string: ", date.toDateString());
-
     const response =
-        await sql`INSERT INTO protocol (date, content) VALUES (${date.toDateString()}, ${content}) RETURNING id`;
+        await sql`INSERT INTO protocol (date, content) VALUES (${date.toISOString()}, ${content}) RETURNING id`;
 
-    participants.forEach(async (participant: any) => {
-        await sql`INSERT INTO protocol_participant (protocol_id, member_id) VALUES (${response.rows[0].id}, ${participant.id})`;
-    });
+    for (const participantId of participantIds) {
+        await sql`INSERT INTO protocol_participant (protocol_id, member_id) VALUES (${response.rows[0].id}, ${participantId})`;
+    }
 
     revalidatePath(`/protocols`);
     redirect(`/protocols`);
@@ -165,20 +160,17 @@ export async function createProtocol(
 
 export async function editProtocol(
     protocolId: string,
-    participantsData: any,
+    participantIds: any,
     date: Date,
     content: string,
 ) {
-    const participants = Array.from(participantsData).map((id) => ({ id }));
+    await sql`UPDATE protocol SET date = ${date.toISOString()}, content=  ${content} WHERE id = ${protocolId}`;
 
-    console.log("Date string: ", date.toDateString());
+    await sql`DELETE FROM protocol_participant WHERE protocol_id = ${protocolId}`;
 
-    const response =
-        await sql`UPDATE protocol SET (date, content) VALUES (${date.toDateString()}, ${content})  WHERE id = ${protocolId}`;
-
-    participants.forEach(async (participant: any) => {
-        await sql`INSERT INTO protocol_participant (protocol_id, member_id) VALUES (${response.rows[0].id}, ${participant.id})`;
-    });
+    for (const participantId of participantIds) {
+        await sql`INSERT INTO protocol_participant (protocol_id, member_id) VALUES (${protocolId}, ${participantId})`;
+    }
 
     revalidatePath(`/protocols`);
     redirect(`/protocols`);
@@ -204,14 +196,17 @@ export async function demoteUser(id: string) {
     revalidatePath("/members");
 }
 
-export async function markEmailSent(schoolId: string) {
-    console.log("Marking as sent...");
-    await sql`UPDATE school SET email_sent = TRUE WHERE id = ${schoolId}`;
-    revalidatePath("/schools");
-}
+export async function toggleEmailSent(schoolId: string) {
+    const response =
+        await sql`SELECT email_sent FROM school WHERE id = ${schoolId}`;
+    const emailSent = response.rows[0].email_sent;
 
-export async function markEmailUnsent(schoolId: string) {
-    await sql`UPDATE school SET email_sent = FALSE WHERE id = ${schoolId}`;
+    if (emailSent) {
+        await sql`UPDATE school SET email_sent = FALSE WHERE id = ${schoolId}`;
+    } else {
+        await await sql`UPDATE school SET email_sent = TRUE WHERE id = ${schoolId}`;
+    }
+
     revalidatePath("/schools");
 }
 

@@ -41,7 +41,7 @@ export default function Page() {
                 </Tabs.List>
 
                 <Tabs.Panel value="home">
-                    <Card p="xl">
+                    <Card p="xl" withBorder>
                         <Stack gap="mid">
                             <Text fw={700}>
                                 Willkommen zu Senkrechtstarter!
@@ -57,7 +57,7 @@ export default function Page() {
                     </Card>
                 </Tabs.Panel>
                 <Tabs.Panel value="email">
-                    <Card p="xl">
+                    <Card p="xl" withBorder>
                         <Stack>
                             <Text fw={700}>E-Mail</Text>
                             <Text>
@@ -102,7 +102,7 @@ export default function Page() {
                     </Card>
                 </Tabs.Panel>
                 <Tabs.Panel value="schulbesuche">
-                    <Card p="xl">
+                    <Card p="xl" withBorder>
                         <Stack>
                             <div>
                                 Was wir bei Senkrechtstarter machen um unserem

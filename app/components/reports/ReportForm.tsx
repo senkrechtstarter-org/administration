@@ -37,8 +37,10 @@ export default function ReportForm({
     participants?: any[];
 }) {
     const [participants, setParticipants] = useState(
-        participantsData?.map((participant: any) => participant.name) || [],
+        participantsData?.map((participant) => participant.name) || [],
     );
+
+    console.log("participant states: ", participants);
 
     const [date, setDate] = useState(report?.date || new Date());
 
@@ -51,17 +53,37 @@ export default function ReportForm({
             SubScript,
             Highlight,
             TextAlign.configure({ types: ["heading", "paragraph"] }),
-            Placeholder.configure({ placeholder: "Was ist passiert?" }),
+            Placeholder.configure({
+                placeholder: report.content || "Was ist passiert?",
+            }),
         ],
+        content: report?.content || "",
     });
 
     return (
         <form
             action={() => {
-                const content = editor?.getHTML();
-                !!report
-                    ? editReport.bind(null, report.id, school.id, participants)
-                    : createReport.bind(null, school.id, participants);
+                const content = editor?.getHTML() || "";
+                const participantIds =
+                    users
+                        ?.filter((user) => participants.includes(user.name))
+                        .map((user) => user.id) || [];
+
+                console.log("Content: ", content);
+                console.log("Participant IDS: ", participantIds);
+                console.log("Date: ", date);
+
+                if (!!report) {
+                    editReport(
+                        report.id,
+                        school.id,
+                        participantIds,
+                        date,
+                        content,
+                    );
+                } else {
+                    createReport(school.id, participantIds, date, content);
+                }
             }}>
             <Container p="xl">
                 <Stack gap="md">

@@ -23,14 +23,14 @@ export default function UserCard({ user }: { user: any }) {
     console.log("User session: ", session);
     console.log("User data: ", user);
     return (
-        <Card p="md">
+        <Card p="md" withBorder shadow="xs" radius="md">
             <Group justify="space-between" gap="md">
                 <Stack align="start" justify="center" gap="sm">
                     <Group>
                         <Title order={4}>{user.name}</Title>
                         <Badge
                             variant="dot"
-                            color={user.is_speaker ? "yellow" : "gray"}>
+                            color={user.is_speaker ? "yellow" : "blue"}>
                             {user.is_speaker ? "Speaker" : "Member"}
                         </Badge>
                     </Group>
@@ -39,7 +39,7 @@ export default function UserCard({ user }: { user: any }) {
 
                 <Menu withArrow>
                     <Menu.Target>
-                        <ActionIcon variant="light">
+                        <ActionIcon variant="subtle">
                             <EllipsisVerticalIcon />
                         </ActionIcon>
                     </Menu.Target>

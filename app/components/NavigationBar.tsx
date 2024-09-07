@@ -12,7 +12,7 @@ export default function NavigationBar() {
         <Group justify="space-between" p="md">
             <Group justify="space-between">
                 <SenkrechtstarterLogo />
-                <Group ml="xl" gap="md">
+                <Group ml="xl" gap="md" align="baseline">
                     <Link
                         href="/home"
                         style={{ textDecoration: "none", color: "inherit" }}>

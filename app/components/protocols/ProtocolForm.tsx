@@ -40,8 +40,10 @@ export default function ProtocolForm({
     participants?: any[];
 }) {
     const [participants, setParticipants] = useState(
-        participantsData?.map((participant: any) => participant.name) || [],
+        participantsData?.map((participant) => participant.name) || [],
     );
+
+    console.log("participant states: ", participants);
 
     const [date, setDate] = useState(protocol?.date || new Date());
 
@@ -54,17 +56,31 @@ export default function ProtocolForm({
             SubScript,
             Highlight,
             TextAlign.configure({ types: ["heading", "paragraph"] }),
-            Placeholder.configure({ placeholder: "Was ist passiert?" }),
+            Placeholder.configure({
+                placeholder: "Was ist passiert?",
+            }),
         ],
+        content: protocol?.content || "",
     });
 
     return (
         <form
             action={() => {
-                const content = editor?.getHTML();
-                !!protocol
-                    ? editProtocol.bind(null, protocol.id, participants)
-                    : createProtocol.bind(null, participants);
+                const content = editor?.getHTML() || "";
+                const participantIds =
+                    users
+                        ?.filter((user) => participants.includes(user.name))
+                        .map((user) => user.id) || [];
+
+                console.log("Content: ", content);
+                console.log("Participant IDS: ", participantIds);
+                console.log("Date: ", date);
+
+                if (!!protocol) {
+                    editProtocol(protocol.id, participantIds, date, content);
+                } else {
+                    createProtocol(participantIds, date, content);
+                }
             }}>
             <Container p="xl">
                 <Stack gap="md">

@@ -21,7 +21,21 @@ export function ThemeSwitcher() {
             onClick={() => {
                 toggleColorScheme();
             }}>
-            {colorScheme === "dark" ? <SunIcon /> : <MoonIcon />}
+            {colorScheme === "dark" ? (
+                <SunIcon
+                    style={{
+                        width: "1.5rem",
+                        height: "1.5rem",
+                    }}
+                />
+            ) : (
+                <MoonIcon
+                    style={{
+                        width: "1.5rem",
+                        height: "1.5rem",
+                    }}
+                />
+            )}
         </ActionIcon>
     );
 }

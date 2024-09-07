@@ -20,6 +20,17 @@ export async function fetchProtocols() {
     }
 }
 
+export async function fetchProtocol(protocolId: string) {
+    try {
+        const response =
+            await sql`SELECT * FROM protocol WHERE id = ${protocolId}`;
+        return response.rows[0];
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch users.");
+    }
+}
+
 export async function fetchSchools() {
     const schools: any[] = [];
     try {

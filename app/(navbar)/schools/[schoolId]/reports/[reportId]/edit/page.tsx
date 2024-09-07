@@ -13,12 +13,17 @@ export default async function Page({
 }: {
     params: { schoolId: string; reportId: string };
 }) {
+    console.log("Report id: ", params.reportId);
+
     const [report, school, users, participants] = await Promise.all([
         fetchReport(params.reportId),
         fetchSchool(params.schoolId),
         fetchUsers(),
         fetchParticipants(params.reportId),
     ]);
+
+    console.log("Participants: ", participants);
+    console.log("Users: ", users);
 
     return (
         <Container p={"md"}>

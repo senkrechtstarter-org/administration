@@ -109,23 +109,16 @@ export async function deleteUser(id: string) {
 
 export async function createReport(
     schoolId: string,
-    participantsData: any,
-    formData: FormData,
+    participantIds: string[],
+    date: Date,
+    content: string,
 ) {
-    const reportData = {
-        schoolId: schoolId,
-        date: new Date(formData.get("date") as string).toDateString(),
-        content: formData.get("content")?.toString(),
-    };
-
-    const participants = Array.from(participantsData).map((id) => ({ id }));
-
     const response =
-        await sql`INSERT INTO report (school_id, date, content) VALUES (${reportData.schoolId}, ${reportData.date}, ${reportData.content}) RETURNING id`;
+        await sql`INSERT INTO report (school_id, date, content) VALUES (${schoolId}, ${date.toDateString()}, ${content}) RETURNING id`;
 
-    participants.forEach(async (participant: any) => {
-        await sql`INSERT INTO participant (report_id, member_id) VALUES (${response.rows[0].id}, ${participant.id})`;
-    });
+    for (const participantId of participantIds) {
+        await sql`INSERT INTO participant (report_id, member_id) VALUES (${response.rows[0].id}, ${participantId})`;
+    }
 
     revalidatePath(`/schools/${schoolId}/reports`);
     redirect(`/schools/${schoolId}/reports`);
@@ -134,37 +127,33 @@ export async function createReport(
 export async function editReport(
     id: string,
     schoolId: string,
-    participants: any,
-    formData: FormData,
+    participantIds: any,
+    date: Date,
+    content: string,
 ) {
-    const reportData = {
-        schoolId: schoolId,
-        date: new Date(formData.get("date") as string).toDateString(),
-        content: formData.get("content")?.toString(),
-        participants: participants,
-    };
+    console.log("Date string: ", date.toDateString());
+    console.log("content: ", content);
+    console.log("participants: ", participantIds);
+    await sql`UPDATE report SET date = ${date.toDateString()}, content = ${content} WHERE id = ${id}`;
 
-    await sql`UPDATE report SET date = ${reportData.date}, content = ${reportData.content} WHERE id = ${id}`;
+    for (const participantId of participantIds) {
+        await sql`INSERT INTO participant (report_id, member_id) VALUES (${id}, ${participantId})`;
+    }
 
-    participants.forEach(async (participant: any) => {
-        await sql`INSERT INTO participant (report_id, member_id) VALUES (${id}, ${participant.id})`;
-    });
     revalidatePath(`/schools/${schoolId}/reports`);
     redirect(`/schools/${schoolId}/reports`);
 }
 export async function createProtocol(
     participantsData: any,
-    formData: FormData,
+    date: Date,
+    content: string,
 ) {
-    const reportData = {
-        date: new Date(formData.get("date") as string).toDateString(),
-        content: formData.get("content")?.toString(),
-    };
-
     const participants = Array.from(participantsData).map((id) => ({ id }));
 
+    console.log("Date string: ", date.toDateString());
+
     const response =
-        await sql`INSERT INTO protocol (date, content) VALUES (${reportData.date}, ${reportData.content}) RETURNING id`;
+        await sql`INSERT INTO protocol (date, content) VALUES (${date.toDateString()}, ${content}) RETURNING id`;
 
     participants.forEach(async (participant: any) => {
         await sql`INSERT INTO protocol_participant (protocol_id, member_id) VALUES (${response.rows[0].id}, ${participant.id})`;
@@ -172,6 +161,32 @@ export async function createProtocol(
 
     revalidatePath(`/protocols`);
     redirect(`/protocols`);
+}
+
+export async function editProtocol(
+    protocolId: string,
+    participantsData: any,
+    date: Date,
+    content: string,
+) {
+    const participants = Array.from(participantsData).map((id) => ({ id }));
+
+    console.log("Date string: ", date.toDateString());
+
+    const response =
+        await sql`UPDATE protocol SET (date, content) VALUES (${date.toDateString()}, ${content})  WHERE id = ${protocolId}`;
+
+    participants.forEach(async (participant: any) => {
+        await sql`INSERT INTO protocol_participant (protocol_id, member_id) VALUES (${response.rows[0].id}, ${participant.id})`;
+    });
+
+    revalidatePath(`/protocols`);
+    redirect(`/protocols`);
+}
+
+export async function deleteProtocol(id: string) {
+    await sql`DELETE FROM protocol WHERE id = ${id}`;
+    revalidatePath("/protocols");
 }
 
 export async function deleteReport(id: string) {

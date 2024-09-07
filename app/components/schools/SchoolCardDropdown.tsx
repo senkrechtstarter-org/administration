@@ -2,7 +2,11 @@
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 
 import { useRouter } from "next/navigation";
-import { deleteSchool, markEmailSent, markEmailUnsent } from "../lib/actions";
+import {
+    deleteSchool,
+    markEmailSent,
+    markEmailUnsent,
+} from "../../lib/actions";
 import { useSession } from "next-auth/react";
 import { ActionIcon, Menu } from "@mantine/core";
 
@@ -13,7 +17,7 @@ export default function SchoolCardDropdown({ school }: { school: any }) {
     return (
         <Menu withArrow>
             <Menu.Target>
-                <ActionIcon variant="transparent">
+                <ActionIcon variant="transparent" m="xs">
                     <EllipsisVerticalIcon />
                 </ActionIcon>
             </Menu.Target>

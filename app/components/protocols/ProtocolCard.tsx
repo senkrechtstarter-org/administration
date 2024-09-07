@@ -1,22 +1,17 @@
 import { Avatar, Badge, Card, Chip, Group, Stack, Title } from "@mantine/core";
-import ReportCardDropdown from "./ReportCardDropdown";
+// import protocolCardDropdown from "../protocolCardDropdown";
 import { fetchParticipants } from "@/app/lib/data";
+import ProtocolCardDropdown from "./ProtocolCardDropdown";
 
-export default async function ReportCard({
-    report,
-    schoolId,
-}: {
-    report: any;
-    schoolId: string;
-}) {
-    const date = report.date;
+export default async function ProtocolCard({ protocol }: { protocol: any }) {
+    const date = protocol.date;
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based, so add 1
     const day = String(date.getDate()).padStart(2, "0");
 
     const formattedDate = `${day}/${month}/${year}`;
 
-    const participants = await fetchParticipants(report.id);
+    const participants = await fetchParticipants(protocol.id);
 
     console.log("Participants: ", participants);
     return (
@@ -24,11 +19,14 @@ export default async function ReportCard({
             <Group justify="space-between">
                 <Title order={4}>{formattedDate}</Title>
 
-                <ReportCardDropdown reportId={report.id} schoolId={schoolId} />
+                <ProtocolCardDropdown protocolId={protocol.id} />
             </Group>
 
             <Stack gap="sm" justify="space-between">
-                <div dangerouslySetInnerHTML={{ __html: report.content }}></div>
+                <div
+                    dangerouslySetInnerHTML={{
+                        __html: protocol.content,
+                    }}></div>
             </Stack>
 
             <Group gap="sm">

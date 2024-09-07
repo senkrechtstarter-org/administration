@@ -1,8 +1,9 @@
 import React from "react";
-import { fetchProtocols, fetchReports, fetchSchool } from "@/app/lib/data";
+import { fetchProtocols } from "@/app/lib/data";
 import { Button, Container, Group, Stack, Text, Title } from "@mantine/core";
 import Link from "next/link";
 import ReportCard from "@/app/components/reports/ReportCard";
+import ProtocolCard from "./ProtocolCard";
 
 export default async function ProtocolOverview() {
     const protocols = await fetchProtocols();
@@ -18,7 +19,7 @@ export default async function ProtocolOverview() {
 
             <Stack justify="space-between" gap={"md"} mt="md">
                 {protocols.length === 0 && (
-                    <Text>Keine Berichte vorhanden!</Text>
+                    <Text>Keine Protokolle vorhanden!</Text>
                 )}
                 {protocols.map((protocol) => (
                     <ProtocolCard key={protocol.id} protocol={protocol} />

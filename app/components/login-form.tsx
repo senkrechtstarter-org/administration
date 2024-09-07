@@ -5,14 +5,21 @@ import { signIn } from "next-auth/react";
 
 export default function LoginForm() {
     return (
-        <Card>
-            <Button
-                onClick={() => {
-                    signIn("google", { callbackUrl: "/schools" });
-                }}
-                rightSection={<ArrowRightIcon />}>
-                Weiter mit Google
-            </Button>
-        </Card>
+        <Button
+            onClick={() => {
+                signIn("google", { callbackUrl: "/schools" });
+            }}
+            variant="gradient"
+            gradient={{ from: "blue", to: "cyan", deg: 90 }}
+            rightSection={
+                <ArrowRightIcon
+                    style={{
+                        width: 20,
+                        height: 20,
+                    }}
+                />
+            }>
+            Mit Google anmelden
+        </Button>
     );
 }

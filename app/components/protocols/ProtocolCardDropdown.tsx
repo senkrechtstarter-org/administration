@@ -3,15 +3,13 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { deleteReport } from "../lib/actions";
-import { ActionIcon, Button, Menu, Popover } from "@mantine/core";
+import { deleteProtocol } from "../../lib/actions";
+import { ActionIcon, Menu } from "@mantine/core";
 
-export default function ReportCardDropdown({
-    reportId,
-    schoolId,
+export default function ProtocolCardDropdown({
+    protocolId,
 }: {
-    reportId: any;
-    schoolId: string;
+    protocolId: any;
 }) {
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +17,7 @@ export default function ReportCardDropdown({
     return (
         <Menu withArrow>
             <Menu.Target>
-                <ActionIcon variant="light">
+                <ActionIcon variant="subtle">
                     <EllipsisVerticalIcon />
                 </ActionIcon>
             </Menu.Target>
@@ -27,18 +25,15 @@ export default function ReportCardDropdown({
                 <Menu.Item
                     key="edit"
                     onClick={() => {
-                        router.push(
-                            `/schools/${schoolId}/reports/${reportId}/edit`,
-                        );
+                        router.push(`protocols/${protocolId}/edit`);
                     }}>
-                    Edit
+                    Bearbeiten
                 </Menu.Item>
                 <Menu.Item
                     key="delete"
-                    color="danger"
-                    onClick={() => deleteReport(reportId)}>
-                    Delete
-                    {/* <DeleteSchoolButton id={school.id} /> */}
+                    color="red"
+                    onClick={() => deleteProtocol(protocolId)}>
+                    Löschen
                 </Menu.Item>
             </Menu.Dropdown>
         </Menu>

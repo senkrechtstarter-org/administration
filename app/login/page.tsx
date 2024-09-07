@@ -2,21 +2,16 @@
 
 import SenkrechtstarterLogo from "@/app/components/senkrechtstarter-logo";
 import LoginForm from "@/app/components/login-form";
-import { Card } from "@mantine/core";
+import { Card, Center, Container, Flex, Group, Stack } from "@mantine/core";
 export default function LoginPage() {
     return (
-        // <div className="flex items-center max-w-140 m-auto mt-auto justify-center h-[100vh] bg-black">
-        <div>
-            {/* <Card className="bg-gradient-to-l from-cyan-400 to-blue-500"> */}
-            <Card>
-                <Card.Section>
+        <Center h={700}>
+            <Card shadow="sm" radius="md" withBorder>
+                <Stack p="lg">
                     <SenkrechtstarterLogo />
-                </Card.Section>
-                {/* <Divider /> */}
-                <Card.Section>
                     <LoginForm />
-                </Card.Section>
+                </Stack>
             </Card>
-        </div>
+        </Center>
     );
 }

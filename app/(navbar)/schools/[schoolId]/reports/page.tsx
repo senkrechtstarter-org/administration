@@ -16,7 +16,7 @@ export default async function Page({
     return (
         <Container p="md" mt="lg">
             <Group justify={"space-between"} align={"center"}>
-                <Title order={3}>Berichte für {school?.name}</Title>
+                <Title order={2}>Berichte für {school?.name}</Title>
                 <Link href={`/schools/${schoolId}/reports/create`}>
                     <Button>Neuen Bericht Hinzufügen</Button>
                 </Link>

@@ -52,7 +52,7 @@ export default function ReportForm({
             Highlight,
             TextAlign.configure({ types: ["heading", "paragraph"] }),
             Placeholder.configure({
-                placeholder: report.content || "Was ist passiert?",
+                placeholder: report?.content || "Was ist passiert?",
             }),
         ],
         content: report?.content || "",

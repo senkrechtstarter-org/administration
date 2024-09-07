@@ -9,7 +9,6 @@ import { ActionIcon, Menu } from "@mantine/core";
 export default function SchoolCardDropdown({ school }: { school: any }) {
     const router = useRouter();
     const { data: session, status } = useSession();
-    console.log("school: ", school);
     return (
         <Menu withArrow position="right-start" offset={15}>
             <Menu.Target>

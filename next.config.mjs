@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
  
 const nextConfig = {
-    // experimental: {
-    //   ppr: 'incremental',
-    // },
-  };
+    experimental: {
+        optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
+    },
+};
    
-  export default nextConfig;
+export default nextConfig;

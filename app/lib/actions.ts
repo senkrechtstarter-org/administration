@@ -218,7 +218,7 @@ export async function createMaterial({
     name: string;
     url: string;
 }) {
-    await sql`INSERT INTO material (name, url) VALUES ${name}, ${url}`;
+    await sql`INSERT INTO material (name, url) VALUES (${name}, ${url})`;
     revalidatePath("/materials");
 }
 

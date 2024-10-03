@@ -10,20 +10,14 @@ export async function POST(request: Request): Promise<NextResponse> {
         const jsonResponse = await handleUpload({
             body,
             request,
-            onBeforeGenerateToken: async (
-                pathname,
-                /* clientPayload */
-            ) => {
+            onBeforeGenerateToken: async (pathname) => {
                 // Generate a client token for the browser to upload the file
                 // ⚠️ Authenticate and authorize users before generating the token.
                 // Otherwise, you're allowing anonymous uploads.
 
                 return {
                     tokenPayload: JSON.stringify({
-                        name:
-                            "pathname" in body.payload
-                                ? body.payload.pathname
-                                : "",
+                        name: pathname,
                     }),
                 };
             },
@@ -31,22 +25,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                 // Get notified of client upload completion
                 // ⚠️ This will not work on `localhost` websites,
                 // Use ngrok or similar to get the full upload flow
-
                 console.log("blob upload completed", blob, tokenPayload);
-
-                try {
-                    // Run any logic after the file upload completed
-
-                    const { name } = JSON.parse(tokenPayload || "{}");
-                    console.log("Name in tokenpayload: ", name);
-                    console.log("Blob url: ", blob.url);
-                    await createMaterial({
-                        name: name,
-                        url: blob.url,
-                    });
-                } catch (error) {
-                    throw new Error("Could not create new material entity");
-                }
             },
         });
 

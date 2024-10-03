@@ -3,6 +3,7 @@
 import { Button, FileButton } from "@mantine/core";
 import { useState } from "react";
 import { upload } from "@vercel/blob/client";
+import { createMaterial } from "@/app/lib/actions";
 
 export default function MaterialUploadButton() {
     const [files, setFiles] = useState<File[]>([]);
@@ -12,13 +13,17 @@ export default function MaterialUploadButton() {
             multiple
             onChange={async (files) => {
                 for (const file of files) {
-                    await upload(file.name, file, {
+                    // Upload files to vercel blob
+                    const blob = await upload(file.name, file, {
                         access: "public",
                         handleUploadUrl: "/api/materials/upload",
                     });
+                    // Create database entry
+                    await createMaterial({
+                        name: blob.pathname,
+                        url: blob.url,
+                    });
                 }
-
-                // Upload files to vercel blob
             }}>
             {(props) => <Button {...props}>Datei hochladen</Button>}
         </FileButton>

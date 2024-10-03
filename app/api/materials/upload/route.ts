@@ -22,7 +22,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                     tokenPayload: JSON.stringify({
                         name:
                             "pathname" in body.payload
-                                ? body.payload["pathname"]
+                                ? body.payload.pathname
                                 : "",
                     }),
                 };
@@ -38,7 +38,8 @@ export async function POST(request: Request): Promise<NextResponse> {
                     // Run any logic after the file upload completed
 
                     const { name } = JSON.parse(tokenPayload || "{}");
-
+                    console.log("Name in tokenpayload: ", name);
+                    console.log("Blob url: ", blob.url);
                     await createMaterial({
                         name: name,
                         url: blob.url,

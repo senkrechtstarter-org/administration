@@ -148,3 +148,13 @@ export async function isSpeaker(email: string) {
         throw new Error("Failed to fetch speaker status.");
     }
 }
+
+export async function fetchMaterials() {
+    try {
+        const response = await sql`SELECT * FROM material`;
+        return response.rows;
+    } catch (error) {
+        console.error("Database Error:", error);
+        throw new Error("Failed to fetch materials.");
+    }
+}

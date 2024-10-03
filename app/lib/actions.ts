@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { sql } from "@vercel/postgres";
+import { del } from "@vercel/blob";
 // import { AuthError } from "next-auth";
 
 const SchoolSchema = z.object({
@@ -210,6 +211,32 @@ export async function toggleEmailSent(schoolId: string) {
     revalidatePath("/schools");
 }
 
+export async function createMaterial({
+    name,
+    url,
+}: {
+    name: string;
+    url: string;
+}) {
+    await sql`INSERT INTO material (name, url) VALUES ${name}, ${url}`;
+    revalidatePath("/materials");
+}
+
+export async function deleteMaterial(id: string) {
+    const response = await sql`SELECT url FROM material WHERE id = ${id}`;
+    const url = response.rows[0].url;
+    console.log("blob url", url);
+    await del(url);
+    await sql`DELETE FROM material WHERE id = ${id}`;
+    revalidatePath("/materials");
+}
+
+export async function downloadMaterial(id: string): Promise<string> {
+    const response = await sql`SELECT url FROM material WHERE id = ${id}`;
+    const url = response.rows[0].url;
+    return url;
+    // TODO: Download file from Vercel blob
+}
 export async function authenticate(prevState: string | undefined) {
     "use server";
     try {

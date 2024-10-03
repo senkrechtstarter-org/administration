@@ -15,7 +15,7 @@ export default async function Page() {
                 </Link>
             </Group>
             <Stack gap="md" mt="md">
-                {users.length === 0 && <Text>No users found</Text>}
+                {users.length === 0 && <Text>Kein Mitglied gefunden!</Text>}
                 {users.sort().map((user) => (
                     <UserCard key={user.id} user={user} />
                 ))}

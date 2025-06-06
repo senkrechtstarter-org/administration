@@ -1,5 +1,22 @@
-## Next.js App Router Course - Starter
+# Senkrechtstarter Administration Platform
 
-This is the starter template for the Next.js App Router Course. It contains the starting code for the dashboard application.
+## Dependencies
 
-For more information, see the [course curriculum](https://nextjs.org/learn) on the Next.js Website.
+- [Next.js](https://nextjs.org/)
+- [Bun](https://bun.sh/)
+
+## Deployment
+
+This project is configured for deployment on Cloudflare Workers using [OpenNext](https://open-next.js.org/). The deployment process is handled through the following commands:
+
+```bash
+# Build and preview locally
+bun run preview
+
+# Build and deploy to Cloudflare Workers
+bun run deploy
+```
+
+## Installation
+
+tba
